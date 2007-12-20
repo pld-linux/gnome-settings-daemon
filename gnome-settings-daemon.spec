@@ -181,9 +181,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gnome-settings-daemon/plugins/keybindings/*-plugin
 %dir %{_libdir}/gnome-settings-daemon/plugins/keyboard
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/keyboard/*.so
+%{_libdir}/gnome-settings-daemon/plugins/keyboard/*.glade
 %{_libdir}/gnome-settings-daemon/plugins/keyboard/*-plugin
 %dir %{_libdir}/gnome-settings-daemon/plugins/media-keys
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/media-keys/*.so
+%{_libdir}/gnome-settings-daemon/plugins/media-keys/*.glade
+%{_libdir}/gnome-settings-daemon/plugins/media-keys/*.png
 %{_libdir}/gnome-settings-daemon/plugins/media-keys/*-plugin
 %dir %{_libdir}/gnome-settings-daemon/plugins/mouse
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/mouse/*.so
