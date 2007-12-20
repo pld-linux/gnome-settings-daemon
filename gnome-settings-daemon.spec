@@ -53,7 +53,6 @@ Summary:	GNOME Control Center gnome-window-settings library
 Summary(pl.UTF-8):	Biblioteka Control Center gnome-window-settings
 Group:		Development/Libraries
 Requires:	libgnomeui >= 2.20.0
-Obsoletes:	control-center-libs
 
 %description libs
 This package contains gnome-window-settings library.
@@ -84,7 +83,6 @@ Summary:	GNOME Control Center static libraries
 Summary(pl.UTF-8):	Statyczne biblioteki GNOME Control Center
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
-Obsoletes:	control-center-static
 
 %description static
 GNOME Control Center static libraries.
