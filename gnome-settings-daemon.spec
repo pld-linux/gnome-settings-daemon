@@ -1,4 +1,5 @@
 Summary:	GNOME Settings Daemon
+Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	2.21.4
 Release:	1
@@ -18,7 +19,7 @@ BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	esound-devel
 BuildRequires:	flex
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 2.13.0
+BuildRequires:	glib2-devel >= 1:2.13.0
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-doc-utils >= 0.12.0
 BuildRequires:	gnome-vfs2-devel >= 2.20.0
@@ -47,6 +48,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 GNOME Settings Daemon.
+
+%description -l pl.UTF-8
+Demon ustawień GNOME.
 
 %package libs
 Summary:	GNOME Control Center gnome-window-settings library
