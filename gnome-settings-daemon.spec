@@ -41,9 +41,9 @@ BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,postun):	gtk+2
 Requires(post,postun):	scrollkeeper
 Requires(post,preun):	GConf2
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	gnome-vfs2 >= 2.20.0
 Requires:	gstreamer-audio-effects-base >= 0.10.10
+Requires:	libgnomeui >= 2.20.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,47 +52,19 @@ GNOME Settings Daemon.
 %description -l pl.UTF-8
 Demon ustawień GNOME.
 
-%package libs
-Summary:	GNOME Control Center gnome-window-settings library
-Summary(pl.UTF-8):	Biblioteka Control Center gnome-window-settings
-Group:		Development/Libraries
-Requires:	libgnomeui >= 2.20.0
-
-%description libs
-This package contains gnome-window-settings library.
-
-%description libs -l pl.UTF-8
-Pakiet ten zawiera bibliotekę gnome-window-settings.
-
 %package devel
-Summary:	GNOME Control Center header files
-Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek GNOME Control Center
-Group:		X11/Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Summary:	Header file for developing GNOME Settings Daemon clients
+Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME
+Group:		Development/Libraries
 Requires:	dbus-glib-devel >= 0.73
-Requires:	fam-devel
-Requires:	gnome-desktop-devel >= 2.20.0
-Requires:	gtk+2-devel >= 2:2.12.0
-Requires:	libgnomeui-devel >= 2.20.0
-Requires:	librsvg-devel >= 2.18.1
+Requires:	glib2-devel >= 1:2.13.0
+# doesn't require base currently
 
 %description devel
-GNOME Control-Center header files.
+Header file for developing GNOME Settings Daemon clients.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe bibliotek GNOME Control Center.
-
-%package static
-Summary:	GNOME Control Center static libraries
-Summary(pl.UTF-8):	Statyczne biblioteki GNOME Control Center
-Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
-
-%description static
-GNOME Control Center static libraries.
-
-%description static -l pl.UTF-8
-Statyczne biblioteki GNOME Control Center.
+Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 
 %prep
 %setup -q
@@ -145,9 +117,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun
 %scrollkeeper_update_postun
-
-%post	libs -p /sbin/ldconfig
-%postun	libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -214,13 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/dbus-1/services/*.service
 
-%files libs
-%defattr(644,root,root,755)
-
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/gnome-settings-daemon-2.0
 %{_pkgconfigdir}/gnome-settings-daemon.pc
-
-%files static
-%defattr(644,root,root,755)
