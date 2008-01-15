@@ -1,50 +1,46 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.21.5
+Version:	2.21.5.2
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.21/%{name}-%{version}.tar.bz2
-# Source0-md5:	c8f7f68d2995e0d504b255c8514e5678
+# Source0-md5:	182b833aa1c7111fe907668419859d5f
 URL:		http://www.gnome.org/
-BuildRequires:	GConf2-devel >= 2.20.0
+BuildRequires:	GConf2-devel >= 2.21.0
 BuildRequires:	alsa-lib-devel >= 1.0.12
-BuildRequires:	audiofile >= 1:0.2.6
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
-BuildRequires:	bison
 BuildRequires:	dbus-glib-devel >= 0.74
-BuildRequires:	esound-devel
-BuildRequires:	flex
+BuildRequires:	esound-devel >= 1:0.2.28
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.13.0
-BuildRequires:	gnome-common >= 2.20.0
-BuildRequires:	gnome-doc-utils >= 0.12.0
+BuildRequires:	glib2-devel >= 1:2.15.2
+BuildRequires:	gnome-desktop-devel >= 2.21.4
 BuildRequires:	gnome-vfs2-devel >= 2.20.0
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.12.0
 BuildRequires:	intltool >= 0.36.2
 BuildRequires:	libglade2-devel >= 1:2.6.2
 BuildRequires:	libgnomekbd-devel >= 2.21.4
-BuildRequires:	libgnomeui-devel >= 2.20.0
+BuildRequires:	libgnomeui-devel >= 2.21.0
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 3.3
-BuildRequires:	libxml2-devel >= 1:2.6.30
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(find_lang) >= 1.23
-BuildRequires:	rpmbuild(macros) >= 1.311
-BuildRequires:	scrollkeeper
+BuildRequires:	rpmbuild(macros) >= 1.198
 BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
-Requires(post,postun):	gtk+2
-Requires(post,postun):	scrollkeeper
 Requires(post,preun):	GConf2
 Requires:	gnome-vfs2 >= 2.20.0
+# It's really needed?
 Requires:	gstreamer-audio-effects-base >= 0.10.10
-Requires:	libgnomeui >= 2.20.0
+Requires:	libgnomeui >= 2.21.0
+# sr@Latn vs. sr@latin
+Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_libexecdir	%{_libdir}/%{name}
 
 %description
 GNOME Settings Daemon.
@@ -56,8 +52,8 @@ Demon ustawień GNOME.
 Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME
 Group:		Development/Libraries
-Requires:	dbus-glib-devel >= 0.73
-Requires:	glib2-devel >= 1:2.13.0
+Requires:	dbus-glib-devel >= 0.74
+Requires:	glib2-devel >= 1:2.15.2
 # doesn't require base currently
 
 %description devel
@@ -69,9 +65,10 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 %prep
 %setup -q
 
+sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
+mv po/sr@{Latn,latin}.po
+
 %build
-%{__gnome_doc_prepare}
-%{__gnome_doc_common}
 %{__glib_gettextize}
 %{__intltoolize}
 %{__libtoolize}
@@ -81,21 +78,18 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 %{__automake}
 %configure \
 	--enable-gstreamer=0.10 \
-	--enable-aboutme \
 	X_EXTRA_LIBS="-lXext"
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# no static modules - shut up check-files
-rm -f $RPM_BUILD_ROOT%{_libdir}/window-manager-settings/*.{a,la}
-rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions*/*.{a,la}
-rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-vfs-2.0/modules/*.{a,la}
+rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon/plugins/*/*.{la,a}
+
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -106,7 +100,6 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_install apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_install desktop_gnome_font_rendering.schemas
 %gconf_schema_install gnome-settings-daemon.schemas
-%scrollkeeper_update_post
 
 %preun
 %gconf_schema_uninstall apps_gnome_settings_daemon_default_editor.schemas
@@ -115,10 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_uninstall desktop_gnome_font_rendering.schemas
 %gconf_schema_uninstall gnome-settings-daemon.schemas
 
-%postun
-%scrollkeeper_update_postun
-
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_default_editor.schemas
@@ -126,60 +116,60 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_screensaver.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_font_rendering.schemas
 %{_sysconfdir}/gconf/schemas/gnome-settings-daemon.schemas
-%dir %{_libdir}/gnome-settings-daemon
-%attr(755,root,root) %{_libexecdir}/gnome-settings-daemon/gnome-settings-daemon
-%dir %{_libdir}/gnome-settings-daemon/plugins
-%dir %{_libdir}/gnome-settings-daemon/plugins/a11y-keyboard
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/a11y-keyboard/*.so
-%{_libdir}/gnome-settings-daemon/plugins/a11y-keyboard/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/background
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/background/*.so
-%{_libdir}/gnome-settings-daemon/plugins/background/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/clipboard
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/clipboard/*.so
-%{_libdir}/gnome-settings-daemon/plugins/clipboard/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/default-editor
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/default-editor/*.so
-%{_libdir}/gnome-settings-daemon/plugins/default-editor/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/dummy
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/dummy/*.so
-%{_libdir}/gnome-settings-daemon/plugins/dummy/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/font
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/font/*.so
-%{_libdir}/gnome-settings-daemon/plugins/font/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/keybindings
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/keybindings/*.so
-%{_libdir}/gnome-settings-daemon/plugins/keybindings/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/keyboard
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/keyboard/*.so
-%{_libdir}/gnome-settings-daemon/plugins/keyboard/*.glade
-%{_libdir}/gnome-settings-daemon/plugins/keyboard/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/media-keys
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/media-keys/*.so
-%{_libdir}/gnome-settings-daemon/plugins/media-keys/*.glade
-%{_libdir}/gnome-settings-daemon/plugins/media-keys/*.png
-%{_libdir}/gnome-settings-daemon/plugins/media-keys/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/mouse
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/mouse/*.so
-%{_libdir}/gnome-settings-daemon/plugins/mouse/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/screensaver
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/screensaver/*.so
-%{_libdir}/gnome-settings-daemon/plugins/screensaver/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/sound
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/sound/*.so
-%{_libdir}/gnome-settings-daemon/plugins/sound/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/typing-break
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/typing-break/*.so
-%{_libdir}/gnome-settings-daemon/plugins/typing-break/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/xrandr
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/xrandr/*.so
-%{_libdir}/gnome-settings-daemon/plugins/xrandr/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/xrdb
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/xrdb/*.so
-%{_libdir}/gnome-settings-daemon/plugins/xrdb/*-plugin
-%dir %{_libdir}/gnome-settings-daemon/plugins/xsettings
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon/plugins/xsettings/*.so
-%{_libdir}/gnome-settings-daemon/plugins/xsettings/*-plugin
+%dir %{_libexecdir}
+%attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
+%dir %{_libexecdir}/plugins
+%dir %{_libexecdir}/plugins/a11y-keyboard
+%attr(755,root,root) %{_libexecdir}/plugins/a11y-keyboard/*.so
+%{_libexecdir}/plugins/a11y-keyboard/*-plugin
+%dir %{_libexecdir}/plugins/background
+%attr(755,root,root) %{_libexecdir}/plugins/background/*.so
+%{_libexecdir}/plugins/background/*-plugin
+%dir %{_libexecdir}/plugins/clipboard
+%attr(755,root,root) %{_libexecdir}/plugins/clipboard/*.so
+%{_libexecdir}/plugins/clipboard/*-plugin
+%dir %{_libexecdir}/plugins/default-editor
+%attr(755,root,root) %{_libexecdir}/plugins/default-editor/*.so
+%{_libexecdir}/plugins/default-editor/*-plugin
+%dir %{_libexecdir}/plugins/dummy
+%attr(755,root,root) %{_libexecdir}/plugins/dummy/*.so
+%{_libexecdir}/plugins/dummy/*-plugin
+%dir %{_libexecdir}/plugins/font
+%attr(755,root,root) %{_libexecdir}/plugins/font/*.so
+%{_libexecdir}/plugins/font/*-plugin
+%dir %{_libexecdir}/plugins/keybindings
+%attr(755,root,root) %{_libexecdir}/plugins/keybindings/*.so
+%{_libexecdir}/plugins/keybindings/*-plugin
+%dir %{_libexecdir}/plugins/keyboard
+%attr(755,root,root) %{_libexecdir}/plugins/keyboard/*.so
+%{_libexecdir}/plugins/keyboard/*.glade
+%{_libexecdir}/plugins/keyboard/*-plugin
+%dir %{_libexecdir}/plugins/media-keys
+%attr(755,root,root) %{_libexecdir}/plugins/media-keys/*.so
+%{_libexecdir}/plugins/media-keys/*.glade
+%{_libexecdir}/plugins/media-keys/*.png
+%{_libexecdir}/plugins/media-keys/*-plugin
+%dir %{_libexecdir}/plugins/mouse
+%attr(755,root,root) %{_libexecdir}/plugins/mouse/*.so
+%{_libexecdir}/plugins/mouse/*-plugin
+%dir %{_libexecdir}/plugins/screensaver
+%attr(755,root,root) %{_libexecdir}/plugins/screensaver/*.so
+%{_libexecdir}/plugins/screensaver/*-plugin
+%dir %{_libexecdir}/plugins/sound
+%attr(755,root,root) %{_libexecdir}/plugins/sound/*.so
+%{_libexecdir}/plugins/sound/*-plugin
+%dir %{_libexecdir}/plugins/typing-break
+%attr(755,root,root) %{_libexecdir}/plugins/typing-break/*.so
+%{_libexecdir}/plugins/typing-break/*-plugin
+%dir %{_libexecdir}/plugins/xrandr
+%attr(755,root,root) %{_libexecdir}/plugins/xrandr/*.so
+%{_libexecdir}/plugins/xrandr/*-plugin
+%dir %{_libexecdir}/plugins/xrdb
+%attr(755,root,root) %{_libexecdir}/plugins/xrdb/*.so
+%{_libexecdir}/plugins/xrdb/*-plugin
+%dir %{_libexecdir}/plugins/xsettings
+%attr(755,root,root) %{_libexecdir}/plugins/xsettings/*.so
+%{_libexecdir}/plugins/xsettings/*-plugin
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/dbus-1/services/*.service
 
