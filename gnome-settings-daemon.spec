@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.21.4
+Version:	2.21.5
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.21/%{name}-%{version}.tar.bz2
-# Source0-md5:	e4c6834638df22bceeeb11d3af9c2021
+# Source0-md5:	c8f7f68d2995e0d504b255c8514e5678
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.20.0
 BuildRequires:	alsa-lib-devel >= 1.0.12
@@ -101,7 +101,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-vfs-2.0/modules/*.{a,la}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%gconf_schema_install apps_gnome_settings_daemon_default.schemas
+%gconf_schema_install apps_gnome_settings_daemon_default_editor.schemas
 %gconf_schema_install apps_gnome_settings_daemon_keybindings.schemas
 %gconf_schema_install apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_install desktop_gnome_font_rendering.schemas
@@ -109,7 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %scrollkeeper_update_post
 
 %preun
-%gconf_schema_uninstall apps_gnome_settings_daemon_default.schemas
+%gconf_schema_uninstall apps_gnome_settings_daemon_default_editor.schemas
 %gconf_schema_uninstall apps_gnome_settings_daemon_keybindings.schemas
 %gconf_schema_uninstall apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_uninstall desktop_gnome_font_rendering.schemas
