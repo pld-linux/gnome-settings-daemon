@@ -1,30 +1,30 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.21.5.2
+Version:	2.21.90.2
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.21/%{name}-%{version}.tar.bz2
-# Source0-md5:	182b833aa1c7111fe907668419859d5f
+# Source0-md5:	6e6146e8f6e2813247ff5aede4ee3dcc
 URL:		http://www.gnome.org/
-BuildRequires:	GConf2-devel >= 2.21.0
+BuildRequires:	GConf2-devel >= 2.21.90
 BuildRequires:	alsa-lib-devel >= 1.0.12
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	esound-devel >= 1:0.2.28
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.15.2
-BuildRequires:	gnome-desktop-devel >= 2.21.4
+BuildRequires:	glib2-devel >= 1:2.15.4
+BuildRequires:	gnome-desktop-devel >= 2.21.90
 BuildRequires:	gnome-vfs2-devel >= 2.20.0
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
-BuildRequires:	gtk+2-devel >= 2:2.12.0
+BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	intltool >= 0.36.2
 BuildRequires:	libglade2-devel >= 1:2.6.2
 BuildRequires:	libgnomekbd-devel >= 2.21.4
-BuildRequires:	libgnomeui-devel >= 2.21.0
+BuildRequires:	libgnomeui-devel >= 2.21.90
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 3.3
 BuildRequires:	pkgconfig
@@ -35,7 +35,7 @@ Requires(post,preun):	GConf2
 Requires:	gnome-vfs2 >= 2.20.0
 # It's really needed?
 Requires:	gstreamer-audio-effects-base >= 0.10.10
-Requires:	libgnomeui >= 2.21.0
+Requires:	libgnomeui >= 2.21.90
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -53,7 +53,7 @@ Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME
 Group:		Development/Libraries
 Requires:	dbus-glib-devel >= 0.74
-Requires:	glib2-devel >= 1:2.15.2
+Requires:	glib2-devel >= 1:2.15.4
 # doesn't require base currently
 
 %description devel
