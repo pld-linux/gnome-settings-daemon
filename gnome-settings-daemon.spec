@@ -8,6 +8,7 @@ License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.21/%{name}-%{version}.tar.bz2
 # Source0-md5:	6e6146e8f6e2813247ff5aede4ee3dcc
+Patch0:		%{name}-load-xkb.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.21.90
 BuildRequires:	alsa-lib-devel >= 1.0.12
@@ -64,6 +65,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 
 %prep
 %setup -q
+%patch0 -p1
 
 sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
 mv po/sr@{Latn,latin}.po
