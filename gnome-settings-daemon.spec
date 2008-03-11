@@ -91,14 +91,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-2.0/*.{la,a}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%gconf_schema_install apps_gnome_settings_daemon_default_editor.schemas
 %gconf_schema_install apps_gnome_settings_daemon_keybindings.schemas
 %gconf_schema_install apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_install desktop_gnome_font_rendering.schemas
 %gconf_schema_install gnome-settings-daemon.schemas
 
 %preun
-%gconf_schema_uninstall apps_gnome_settings_daemon_default_editor.schemas
 %gconf_schema_uninstall apps_gnome_settings_daemon_keybindings.schemas
 %gconf_schema_uninstall apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_uninstall desktop_gnome_font_rendering.schemas
@@ -107,7 +105,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
-%{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_default_editor.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_keybindings.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_screensaver.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_font_rendering.schemas
