@@ -1,29 +1,29 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.21.91
+Version:	2.22.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.21/%{name}-%{version}.tar.bz2
-# Source0-md5:	a411525584ec30d19e37f8b2be7bbe65
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.22/%{name}-%{version}.tar.bz2
+# Source0-md5:	5bb2b129342e3149c00892aa18926317
 URL:		http://www.gnome.org/
-BuildRequires:	GConf2-devel >= 2.21.90
+BuildRequires:	GConf2-devel >= 2.22.0
 BuildRequires:	alsa-lib-devel >= 1.0.12
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	esound-devel >= 1:0.2.28
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.15.4
-BuildRequires:	gnome-desktop-devel >= 2.21.90
+BuildRequires:	glib2-devel >= 1:2.16.0
+BuildRequires:	gnome-desktop-devel >= 2.22.0
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	intltool >= 0.37.0
 BuildRequires:	libglade2-devel >= 1:2.6.2
-BuildRequires:	libgnomekbd-devel >= 2.21.4
-BuildRequires:	libgnomeui-devel >= 2.21.90
+BuildRequires:	libgnomekbd-devel >= 2.21.4.1
+BuildRequires:	libgnomeui-devel >= 2.22.0
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 3.3
 BuildRequires:	pkgconfig
@@ -33,7 +33,7 @@ BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,preun):	GConf2
 # It's really needed?
 Requires:	gstreamer-audio-effects-base >= 0.10.10
-Requires:	libgnomeui >= 2.21.90
+Requires:	libgnomeui >= 2.22.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
