@@ -2,7 +2,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	2.22.0
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -25,7 +25,7 @@ BuildRequires:	libglade2-devel >= 1:2.6.2
 BuildRequires:	libgnomekbd-devel >= 2.21.4.1
 BuildRequires:	libgnomeui-devel >= 2.22.0
 BuildRequires:	libtool
-BuildRequires:	libxklavier-devel >= 3.3
+BuildRequires:	libxklavier-devel >= 3.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 BuildRequires:	sed >= 4.0
