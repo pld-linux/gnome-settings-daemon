@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.22.0
-Release:	3
+Version:	2.22.1
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.22/%{name}-%{version}.tar.bz2
-# Source0-md5:	5bb2b129342e3149c00892aa18926317
+# Source0-md5:	959d0d289ed81f950004fa64dbcff89d
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.22.0
 BuildRequires:	alsa-lib-devel >= 1.0.12
@@ -16,13 +16,13 @@ BuildRequires:	automake >= 1:1.9
 BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	esound-devel >= 1:0.2.28
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.16.0
+BuildRequires:	glib2-devel >= 1:2.16.1
 BuildRequires:	gnome-desktop-devel >= 2.22.0
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	intltool >= 0.37.0
 BuildRequires:	libglade2-devel >= 1:2.6.2
-BuildRequires:	libgnomekbd-devel >= 2.21.4.1
+BuildRequires:	libgnomekbd-devel >= 2.22.0
 BuildRequires:	libgnomeui-devel >= 2.22.0
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 3.5
@@ -49,7 +49,7 @@ Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME
 Group:		Development/Libraries
 Requires:	dbus-glib-devel >= 0.74
-Requires:	glib2-devel >= 1:2.15.4
+Requires:	glib2-devel >= 1:2.16.1
 # doesn't require base currently
 
 %description devel
