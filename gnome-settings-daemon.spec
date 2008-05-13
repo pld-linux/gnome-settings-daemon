@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.22.1
+Version:	2.23.1.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.22/%{name}-%{version}.tar.bz2
-# Source0-md5:	959d0d289ed81f950004fa64dbcff89d
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.23/%{name}-%{version}.tar.bz2
+# Source0-md5:	b5118a08f2c468400d98c3f58454b287
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.22.0
 BuildRequires:	alsa-lib-devel >= 1.0.12
@@ -109,6 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_screensaver.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_font_rendering.schemas
 %{_sysconfdir}/gconf/schemas/gnome-settings-daemon.schemas
+%{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon
 %dir %{_libdir}/gnome-settings-daemon-2.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/liba11y-keyboard.so
@@ -116,6 +117,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libclipboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libdummy.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libfont.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libhousekeeping.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libkeybindings.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libkeyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libmedia-keys.so
@@ -131,6 +133,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gnome-settings-daemon-2.0/clipboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/dummy.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/font.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-2.0/housekeeping.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/keybindings.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/keyboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/media-keys.gnome-settings-plugin
