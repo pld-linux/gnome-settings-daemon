@@ -17,7 +17,7 @@ BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	esound-devel >= 1:0.2.28
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
-BuildRequires:	gnome-desktop-devel >= 2.22.0
+BuildRequires:	gnome-desktop-devel >= 2.23.3
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	intltool >= 0.37.0
