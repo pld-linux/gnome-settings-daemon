@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.23.4
+Version:	2.23.5
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.23/%{name}-%{version}.tar.bz2
-# Source0-md5:	ea26c660a580e9d976111e078ca233ef
+# Source0-md5:	1dfdc22020b53b89e5cee243daaf5049
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.22.0
 BuildRequires:	alsa-lib-devel >= 1.0.12
@@ -27,10 +27,12 @@ BuildRequires:	libgnomeui-devel >= 2.22.0
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 3.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.198
+BuildRequires:	pulseaudio-devel
+BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,preun):	GConf2
+Requires(post,postun):	gtk+2
 # It's really needed?
 Requires:	gstreamer-audio-effects-base >= 0.10.10
 Requires:	libgnomeui >= 2.22.0
@@ -95,12 +97,16 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_install apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_install desktop_gnome_font_rendering.schemas
 %gconf_schema_install gnome-settings-daemon.schemas
+%update_icon_cache hicolor
 
 %preun
 %gconf_schema_uninstall apps_gnome_settings_daemon_keybindings.schemas
 %gconf_schema_uninstall apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_uninstall desktop_gnome_font_rendering.schemas
 %gconf_schema_uninstall gnome-settings-daemon.schemas
+
+%postun
+%update_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -146,6 +152,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gnome-settings-daemon-2.0/xsettings.gnome-settings-plugin
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/dbus-1/services/org.gnome.SettingsDaemon.service
+%{_iconsdir}/hicolor/*/*/*.png
+%{_iconsdir}/hicolor/*/*/*.svg
 
 %files devel
 %defattr(644,root,root,755)
