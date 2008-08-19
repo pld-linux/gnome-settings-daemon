@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.23.5
+Version:	2.23.90
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.23/%{name}-%{version}.tar.bz2
-# Source0-md5:	1dfdc22020b53b89e5cee243daaf5049
+# Source0-md5:	fa13f79d1e9adea1e8f3e85107cd045e
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.22.0
 BuildRequires:	alsa-lib-devel >= 1.0.12
@@ -17,7 +17,7 @@ BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	esound-devel >= 1:0.2.28
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
-BuildRequires:	gnome-desktop-devel >= 2.23.3
+BuildRequires:	gnome-desktop-devel >= 2.23.90
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	intltool >= 0.37.0
@@ -94,6 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %gconf_schema_install apps_gnome_settings_daemon_keybindings.schemas
 %gconf_schema_install apps_gnome_settings_daemon_screensaver.schemas
+%gconf_schema_install apps_gnome_settings_daemon_xrandr.schemas
 %gconf_schema_install desktop_gnome_font_rendering.schemas
 %gconf_schema_install gnome-settings-daemon.schemas
 %update_icon_cache hicolor
@@ -101,6 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %preun
 %gconf_schema_uninstall apps_gnome_settings_daemon_keybindings.schemas
 %gconf_schema_uninstall apps_gnome_settings_daemon_screensaver.schemas
+%gconf_schema_uninstall apps_gnome_settings_daemon_xrandr.schemas
 %gconf_schema_uninstall desktop_gnome_font_rendering.schemas
 %gconf_schema_uninstall gnome-settings-daemon.schemas
 
@@ -112,6 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_keybindings.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_screensaver.schemas
+%{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_xrandr.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_font_rendering.schemas
 %{_sysconfdir}/gconf/schemas/gnome-settings-daemon.schemas
 %{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
