@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.25.90
+Version:	2.25.92
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.25/%{name}-%{version}.tar.bz2
-# Source0-md5:	e50852ecd22ef956ac5ec5650683f2dd
+# Source0-md5:	0b3588da5366fb3978aa936ad2a2140c
 Patch0:		%{name}-no-daemon.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.25.0
