@@ -1,42 +1,36 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.24.1
-Release:	3
+Version:	2.26.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.24/%{name}-%{version}.tar.bz2
-# Source0-md5:	841447fa690a3a4712e9ddaec2584824
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.26/%{name}-%{version}.tar.bz2
+# Source0-md5:	c3a2934deccfcf13de15507d4be802d3
 Patch0:		%{name}-no-daemon.patch
-Patch1:		%{name}-gsd-mouse-xinput.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
-BuildRequires:	alsa-lib-devel >= 1.0.12
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	dbus-glib-devel >= 0.74
-BuildRequires:	esound-devel >= 1:0.2.28
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.18.0
-BuildRequires:	gnome-desktop-devel >= 2.24.0
-BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
-BuildRequires:	gtk+2-devel >= 2:2.14.0
-BuildRequires:	intltool >= 0.37.0
+BuildRequires:	glib2-devel >= 1:2.20.0
+BuildRequires:	gnome-desktop-devel >= 2.26.0
+BuildRequires:	gtk+2-devel >= 2:2.16.0
+BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libglade2-devel >= 1:2.6.2
-BuildRequires:	libgnomekbd-devel >= 2.24.0
+BuildRequires:	libgnomekbd-devel >= 2.26.0
 BuildRequires:	libtool
-BuildRequires:	libxklavier-devel >= 3.5
+BuildRequires:	libnotify-devel >= 0.4.3
+BuildRequires:	libxklavier-devel >= 3.8
 BuildRequires:	pkgconfig
-BuildRequires:	pulseaudio-devel
+BuildRequires:	pulseaudio-devel >= 0.9.12
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,preun):	GConf2
 Requires(post,postun):	gtk+2
-# It's really needed?
-Requires:	gstreamer-audio-effects-base >= 0.10.10
-Requires:	libgnomeui >= 2.24.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,7 +46,7 @@ Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME
 Group:		Development/Libraries
 Requires:	dbus-glib-devel >= 0.74
-Requires:	glib2-devel >= 1:2.18.0
+Requires:	glib2-devel >= 1:2.20.0
 # doesn't require base currently
 
 %description devel
@@ -64,7 +58,6 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
 
 %build
 %{__glib_gettextize}
@@ -74,9 +67,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 %{__autoheader}
 %{__autoconf}
 %{__automake}
-%configure \
-	--enable-gstreamer=0.10 \
-	X_EXTRA_LIBS="-lXext"
+%configure
 %{__make}
 
 %install
@@ -97,6 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_install apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_install apps_gnome_settings_daemon_xrandr.schemas
 %gconf_schema_install desktop_gnome_font_rendering.schemas
+%gconf_schema_install desktop_gnome_keybindings.schemas
 %gconf_schema_install gnome-settings-daemon.schemas
 %update_icon_cache hicolor
 
@@ -105,6 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_uninstall apps_gnome_settings_daemon_screensaver.schemas
 %gconf_schema_uninstall apps_gnome_settings_daemon_xrandr.schemas
 %gconf_schema_uninstall desktop_gnome_font_rendering.schemas
+%gconf_schema_uninstall desktop_gnome_keybindings.schemas
 %gconf_schema_uninstall gnome-settings-daemon.schemas
 
 %postun
@@ -117,8 +110,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_screensaver.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_xrandr.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_font_rendering.schemas
+%{_sysconfdir}/gconf/schemas/desktop_gnome_keybindings.schemas
 %{_sysconfdir}/gconf/schemas/gnome-settings-daemon.schemas
 %{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
+%{_datadir}/gnome-control-center/keybindings/50-accessibility.xml
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon
 %dir %{_libdir}/gnome-settings-daemon-2.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/liba11y-keyboard.so
