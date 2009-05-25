@@ -30,6 +30,7 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,preun):	GConf2
 Requires(post,postun):	gtk+2
+Requires:	xorg-app-xrdb
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
