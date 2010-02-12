@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.28.1
+Version:	2.29.90
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.28/%{name}-%{version}.tar.bz2
-# Source0-md5:	cadb2e161846c4df76fec45679db1f50
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.29/%{name}-%{version}.tar.bz2
+# Source0-md5:	3b516fdac67458bfd4114432a72f28a7
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.60
@@ -15,17 +15,18 @@ BuildRequires:	automake >= 1:1.9
 BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.20.0
-BuildRequires:	gnome-desktop-devel >= 2.26.0
+BuildRequires:	gnome-desktop-devel >= 2.29.0
 BuildRequires:	gtk+2-devel >= 2:2.16.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk-devel
-BuildRequires:	libgnomekbd-devel >= 2.26.0
+BuildRequires:	libgnomekbd-devel >= 2.29.5
 BuildRequires:	libtool
 BuildRequires:	libnotify-devel >= 0.4.5
-BuildRequires:	libxklavier-devel >= 4.0
+BuildRequires:	libxklavier-devel >= 5.0
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 0.9.15
 BuildRequires:	rpmbuild(macros) >= 1.311
+BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,preun):	GConf2
 Requires(post,postun):	gtk+2
@@ -56,6 +57,9 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 
 %prep
 %setup -q
+
+sed -i -e 's/en@shaw//' po/LINGUAS
+rm -f po/en@shaw.po
 
 %build
 %{__glib_gettextize}
