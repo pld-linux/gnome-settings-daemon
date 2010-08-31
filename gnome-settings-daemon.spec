@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.30.2
+Version:	2.31.91
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.30/%{name}-%{version}.tar.bz2
-# Source0-md5:	b945b1f542167c201a11f0ba1e1a4739
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.31/%{name}-%{version}.tar.bz2
+# Source0-md5:	9e559d1aed5335eb27a89fba88b5e097
 Patch0:		%{name}-pa-reconnect.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
@@ -93,6 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_install apps_gnome_settings_daemon_xrandr.schemas
 %gconf_schema_install desktop_gnome_font_rendering.schemas
 %gconf_schema_install desktop_gnome_keybindings.schemas
+%gconf_schema_install desktop_gnome_peripherals_smartcard.schemas
 %gconf_schema_install desktop_gnome_peripherals_touchpad.schemas
 %gconf_schema_install gnome-settings-daemon.schemas
 %update_icon_cache hicolor
@@ -103,6 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_uninstall apps_gnome_settings_daemon_xrandr.schemas
 %gconf_schema_uninstall desktop_gnome_font_rendering.schemas
 %gconf_schema_uninstall desktop_gnome_keybindings.schemas
+%gconf_schema_uninstall desktop_gnome_peripherals_smartcard.schemas
 %gconf_schema_uninstall desktop_gnome_peripherals_touchpad.schemas
 %gconf_schema_uninstall gnome-settings-daemon.schemas
 
@@ -112,17 +114,22 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
+%{_sysconfdir}/dbus-1/system.d/org.gnome.SettingsDaemon.DateTimeMechanism.conf
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_housekeeping.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_keybindings.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_xrandr.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_font_rendering.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_keybindings.schemas
+%{_sysconfdir}/gconf/schemas/desktop_gnome_peripherals_smartcard.schemas
 %{_sysconfdir}/gconf/schemas/desktop_gnome_peripherals_touchpad.schemas
 %{_sysconfdir}/gconf/schemas/gnome-settings-daemon.schemas
 %{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
+%{_datadir}/dbus-1/system-services/org.gnome.SettingsDaemon.DateTimeMechanism.service
 %{_datadir}/gnome-control-center/keybindings/50-accessibility.xml
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon
-%attr(755,root,root) %{_libdir}/gsd-locate-pointer
+%{_datadir}/polkit-1/actions/org.gnome.settingsdaemon.datetimemechanism.policy
+%attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
+%attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
+%attr(755,root,root) %{_libexecdir}/gsd-datetime-mechanism
 %dir %{_libdir}/gnome-settings-daemon-2.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/liba11y-keyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libbackground.so
@@ -133,6 +140,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libkeyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libmedia-keys.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libmouse.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libsound.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libtyping-break.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-2.0/libxrandr.so
@@ -147,6 +155,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gnome-settings-daemon-2.0/keyboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/media-keys.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/mouse.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-2.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/sound.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/typing-break.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-2.0/xrandr.gnome-settings-plugin
