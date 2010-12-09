@@ -1,0 +1,23 @@
+commit d3541003ae3edb30b17278f12ee976e497806d82
+Author: Jason D. Clinton <me@jasonclinton.com>
+Date:   Thu Dec 2 15:44:35 2010 -0600
+
+    mouse: gtk3: gdk_x11_drawable_get_xid renamed to gdk_x11_window_get_xid
+    
+    Just a one-line search-replace.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=636328
+
+diff --git a/plugins/mouse/gsd-locate-pointer.c b/plugins/mouse/gsd-locate-pointer.c
+index 11b0da5..afbc622 100644
+--- a/plugins/mouse/gsd-locate-pointer.c
++++ b/plugins/mouse/gsd-locate-pointer.c
+@@ -421,7 +421,7 @@ set_locate_pointer (void)
+                   Window xroot;
+ 
+                   screen = gdk_display_get_screen (display, j);
+-                  xroot = gdk_x11_drawable_get_xid (gdk_screen_get_root_window (screen));
++                  xroot = gdk_x11_window_get_xid (gdk_screen_get_root_window (screen));
+ 
+                   XGrabKey (GDK_DISPLAY_XDISPLAY (display),
+                             keys[i].keycode,
