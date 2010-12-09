@@ -1,14 +1,15 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.91.3
+Version:	2.91.5.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	d09334b216e0ad2623026ad8fc52d35c
+# Source0-md5:	9937225916faf7d4eedca7785afeaae6
 Patch0:		%{name}-pa-reconnect.patch
+Patch1:		gtk3.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.60
@@ -18,7 +19,7 @@ BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.20.0
 BuildRequires:	gnome-desktop3-devel >= 2.91.2
-BuildRequires:	gsettings-desktop-schemas-devel >= 0.1.1
+BuildRequires:	gsettings-desktop-schemas-devel >= 0.1.2
 BuildRequires:	gtk+3-devel >= 2.91.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk3-devel
@@ -65,6 +66,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__glib_gettextize}
@@ -114,6 +116,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-datetime-mechanism
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libautomount.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libbackground.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libclipboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libhousekeeping.so
@@ -123,9 +126,11 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libmouse.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libwacom.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxsettings.so
 %{_libdir}/gnome-settings-daemon-3.0/a11y-keyboard.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/automount.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/background.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/clipboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/housekeeping.gnome-settings-plugin
@@ -135,6 +140,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/mouse.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
