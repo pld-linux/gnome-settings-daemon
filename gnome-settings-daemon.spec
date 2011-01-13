@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.91.6.2
+Version:	2.91.8
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	49d6ac876438a1eaf7cea42fe2caaeb7
+# Source0-md5:	999416d5e6e054c05b7c5b3f97be7b0e
 Patch0:		%{name}-pa-reconnect.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
@@ -17,12 +17,12 @@ BuildRequires:	dbus-devel >= 1.2.0
 BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.20.0
-BuildRequires:	gnome-desktop3-devel >= 2.91.2
-BuildRequires:	gsettings-desktop-schemas-devel >= 0.1.2
-BuildRequires:	gtk+3-devel >= 2.91.0
+BuildRequires:	gnome-desktop3-devel >= 2.91.6
+BuildRequires:	gsettings-desktop-schemas-devel >= 0.1.4
+BuildRequires:	gtk+3-devel >= 2.91.7
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk3-devel
-BuildRequires:	libgnomekbd-devel >= 2.91.1
+BuildRequires:	libgnomekbd-devel >= 2.91.5
 BuildRequires:	libnotify-devel >= 0.6.1
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 5.0
@@ -35,7 +35,7 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,postun):	gtk+2
 Requires(post,postun):	glib2 >= 1:2.26.0
-Requires:	gsettings-desktop-schemas >= 0.1.1
+Requires:	gsettings-desktop-schemas >= 0.1.4
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
