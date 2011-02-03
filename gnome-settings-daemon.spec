@@ -1,25 +1,27 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.91.8
+Version:	2.91.9
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	999416d5e6e054c05b7c5b3f97be7b0e
+# Source0-md5:	51ab015d3d08c7f0c85e3c60b733e179
 Patch0:		%{name}-pa-reconnect.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
+BuildRequires:	cups-devel
 BuildRequires:	dbus-devel >= 1.2.0
 BuildRequires:	dbus-glib-devel >= 0.74
+BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.20.0
+BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-desktop3-devel >= 2.91.6
 BuildRequires:	gsettings-desktop-schemas-devel >= 0.1.4
-BuildRequires:	gtk+3-devel >= 2.91.7
+BuildRequires:	gtk+3-devel >= 2.99.3
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk3-devel
 BuildRequires:	libgnomekbd-devel >= 2.91.5
@@ -32,8 +34,12 @@ BuildRequires:	polkit-devel >= 0.97
 BuildRequires:	pulseaudio-devel >= 0.9.16
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
-Requires(post,postun):	gtk+2
+BuildRequires:	xorg-proto-kbproto-devel
+Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	gsettings-desktop-schemas >= 0.1.4
 Requires:	hicolor-icon-theme
@@ -122,6 +128,7 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libkeyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libmedia-keys.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libmouse.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libwacom.so
@@ -136,6 +143,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/keyboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/media-keys.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/mouse.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
