@@ -2,7 +2,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	2.32.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -21,8 +21,8 @@ BuildRequires:	gtk+2-devel >= 2:2.22.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk-devel
 BuildRequires:	libgnomekbd-devel >= 2.32.0
-BuildRequires:	libtool
 BuildRequires:	libnotify-devel >= 0.4.5
+BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 5.0
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.91
@@ -30,8 +30,9 @@ BuildRequires:	pulseaudio-devel >= 0.9.15
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
+Requires(post,postun):	gtk-update-icon-cache
+Requires(post,postun):	hicolor-icon-theme
 Requires(post,preun):	GConf2
-Requires(post,postun):	gtk+2
 Requires:	xorg-app-xrdb
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -115,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
-%{_sysconfdir}/dbus-1/system.d/org.gnome.SettingsDaemon.DateTimeMechanism.conf
+/etc/dbus-1/system.d/org.gnome.SettingsDaemon.DateTimeMechanism.conf
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_housekeeping.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_keybindings.schemas
 %{_sysconfdir}/gconf/schemas/apps_gnome_settings_daemon_xrandr.schemas
