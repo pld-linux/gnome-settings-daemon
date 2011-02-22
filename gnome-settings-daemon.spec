@@ -1,16 +1,17 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.91.9
+Version:	2.91.90
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	51ab015d3d08c7f0c85e3c60b733e179
+# Source0-md5:	57a65d00ed96a42b2abaa6c21defdfe7
 Patch0:		%{name}-pa-reconnect.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
+BuildRequires:	PackageKit-devel >= 0.6.4
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	cups-devel
@@ -19,9 +20,9 @@ BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
-BuildRequires:	gnome-desktop3-devel >= 2.91.6
+BuildRequires:	gnome-desktop3-devel >= 2.91.90
 BuildRequires:	gsettings-desktop-schemas-devel >= 0.1.4
-BuildRequires:	gtk+3-devel >= 2.99.3
+BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk3-devel
 BuildRequires:	libgnomekbd-devel >= 2.91.5
@@ -34,14 +35,16 @@ BuildRequires:	polkit-devel >= 0.97
 BuildRequires:	pulseaudio-devel >= 0.9.16
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
+BuildRequires:	udev-glib-devel
+BuildRequires:	upower-devel >= 0.9.1
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
-Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	gsettings-desktop-schemas >= 0.1.4
+Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -59,7 +62,7 @@ Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawiń GNOM
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
 Requires:	dbus-glib-devel >= 0.74
-Requires:	glib2-devel >= 1:2.20.0
+Requires:	glib2-devel >= 1:2.26.0
 # doesn't require base currently
 
 %description devel
@@ -110,11 +113,6 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
-%{_sysconfdir}/dbus-1/system.d/org.gnome.SettingsDaemon.DateTimeMechanism.conf
-%{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
-%{_datadir}/dbus-1/system-services/org.gnome.SettingsDaemon.DateTimeMechanism.service
-%{_datadir}/gnome-control-center/keybindings/50-accessibility.xml
-%{_datadir}/polkit-1/actions/org.gnome.settingsdaemon.datetimemechanism.policy
 %attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-datetime-mechanism
@@ -131,6 +129,7 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libupdates.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libwacom.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxsettings.so
@@ -146,16 +145,21 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/updates.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
+%{_datadir}/dbus-1/services/org.gnome.SettingsDaemon.service
+%{_datadir}/dbus-1/system-services/org.gnome.SettingsDaemon.DateTimeMechanism.service
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/gnome-settings-daemon
-%{_datadir}/dbus-1/services/org.gnome.SettingsDaemon.service
+%{_datadir}/polkit-1/actions/org.gnome.settingsdaemon.datetimemechanism.policy
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svg
 %{_mandir}/man1/gnome-settings-daemon.1*
+%{_sysconfdir}/dbus-1/system.d/org.gnome.SettingsDaemon.DateTimeMechanism.conf
+%{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
 
 %files devel
 %defattr(644,root,root,755)
