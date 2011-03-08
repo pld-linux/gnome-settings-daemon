@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.91.90
+Version:	2.91.91
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	57a65d00ed96a42b2abaa6c21defdfe7
+# Source0-md5:	e5aab6a08f57f9336464be8fc39a7f15
 Patch0:		%{name}-pa-reconnect.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
@@ -165,3 +165,4 @@ fi
 %defattr(644,root,root,755)
 %{_includedir}/gnome-settings-daemon-3.0
 %{_pkgconfigdir}/gnome-settings-daemon.pc
+%{_datadir}/dbus-1/interfaces/org.gnome.SettingsDaemonUpdates.xml
