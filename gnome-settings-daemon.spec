@@ -22,8 +22,8 @@ BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
-BuildRequires:	gnome-desktop3-devel >= 2.91.90
-BuildRequires:	gsettings-desktop-schemas-devel >= 0.1.4
+BuildRequires:	gnome-desktop3-devel >= 2.91.91
+BuildRequires:	gsettings-desktop-schemas-devel >= 2.91.91
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk3-devel
