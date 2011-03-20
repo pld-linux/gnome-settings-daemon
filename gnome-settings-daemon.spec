@@ -92,6 +92,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -152,6 +153,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
+%dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/dbus-1/services/org.gnome.SettingsDaemon.service
 %{_datadir}/dbus-1/system-services/org.gnome.SettingsDaemon.DateTimeMechanism.service
