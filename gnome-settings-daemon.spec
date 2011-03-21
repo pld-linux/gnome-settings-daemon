@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.91.91
-Release:	2
+Version:	2.91.92
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	e5aab6a08f57f9336464be8fc39a7f15
+# Source0-md5:	174414410a6bafbadc364cc15bfaf3ec
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
@@ -45,7 +45,7 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 Requires(post,postun):	glib2 >= 1:2.26.0
-Requires:	gsettings-desktop-schemas >= 0.1.4
+Requires:	gsettings-desktop-schemas >= 2.91.91
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
@@ -120,6 +120,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-datetime-mechanism
+%attr(755,root,root) %{_libexecdir}/gsd-printer
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libautomount.so
@@ -159,6 +160,7 @@ fi
 %{_datadir}/dbus-1/system-services/org.gnome.SettingsDaemon.DateTimeMechanism.service
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/gnome-settings-daemon
+%{_datadir}/gnome-settings-daemon-3.0
 %{_datadir}/polkit-1/actions/org.gnome.settingsdaemon.datetimemechanism.policy
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svg
