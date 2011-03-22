@@ -2,7 +2,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	2.91.92
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -22,8 +22,8 @@ BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
-BuildRequires:	gnome-desktop3-devel >= 2.91.91
-BuildRequires:	gsettings-desktop-schemas-devel >= 2.91.91
+BuildRequires:	gnome-desktop3-devel >= 2.91.92
+BuildRequires:	gsettings-desktop-schemas-devel >= 2.91.92
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libcanberra-gtk3-devel
@@ -45,7 +45,8 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 Requires(post,postun):	glib2 >= 1:2.26.0
-Requires:	gsettings-desktop-schemas >= 2.91.91
+Requires:	gsettings-desktop-schemas >= 2.91.92
+Requires:	gnome-desktop >= 2.91.92
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
