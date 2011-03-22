@@ -45,8 +45,8 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 Requires(post,postun):	glib2 >= 1:2.26.0
+Requires:	gnome-desktop3 >= 2.91.92
 Requires:	gsettings-desktop-schemas >= 2.91.92
-Requires:	gnome-desktop >= 2.91.92
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
