@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	2.91.92
-Release:	2
+Version:	2.91.93
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	174414410a6bafbadc364cc15bfaf3ec
+# Source0-md5:	840fc84829f4a9587546ad40dd2da39c
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
@@ -124,6 +124,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-printer
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-settings.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libautomount.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libbackground.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libclipboard.so
@@ -140,6 +141,7 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxsettings.so
 %{_libdir}/gnome-settings-daemon-3.0/a11y-keyboard.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/a11y-settings.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/automount.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/background.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/clipboard.gnome-settings-plugin
