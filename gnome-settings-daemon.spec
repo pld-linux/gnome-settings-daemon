@@ -28,7 +28,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.91
 BuildRequires:	pulseaudio-devel >= 0.9.15
 BuildRequires:	rpmbuild(macros) >= 1.311
-BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
@@ -46,7 +45,7 @@ Demon ustawień GNOME.
 
 %package devel
 Summary:	Header file for developing GNOME Settings Daemon clients
-Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME
+Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
 Requires:	dbus-glib-devel >= 0.74
 Requires:	glib2-devel >= 1:2.20.0
@@ -56,14 +55,11 @@ Requires:	glib2-devel >= 1:2.20.0
 Header file for developing GNOME Settings Daemon clients.
 
 %description devel -l pl.UTF-8
-Plik nagłówkowy do tworzenia klientów demona ustawiń GNOME.
+Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 
 %prep
 %setup -q
 %patch0 -p1
-
-sed -i -e 's/en@shaw//' po/LINGUAS
-rm -f po/en@shaw.po
 
 %build
 %{__glib_gettextize}
@@ -82,7 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-2.0/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-2.0/*.{la,a}
 
 %find_lang %{name}
 
