@@ -2,7 +2,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	3.0.0.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -13,7 +13,7 @@ Patch0:		%{name}-pa-reconnect.patch
 Patch100:	use-etc-sysconfig-timezone.patch
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.24.0
-BuildRequires:	PackageKit-devel >= 0.6.4
+BuildRequires:	PackageKit-devel >= 0.6.13
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	cups-devel
