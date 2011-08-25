@@ -3,13 +3,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.0.2
+Version:	3.0.3
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	95d75ec602723c300f8117d65562a1bc
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.0/%{name}-%{version}.tar.xz
+# Source0-md5:	f80d20d0ecd8675ad413166688deca31
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
@@ -39,6 +39,7 @@ BuildRequires:	polkit-devel >= 0.97
 BuildRequires:	pulseaudio-devel >= 0.9.16
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.9.1
 BuildRequires:	xorg-lib-libX11-devel
@@ -46,6 +47,7 @@ BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
+BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	gnome-desktop >= 2.91.93
 Requires:	gsettings-desktop-schemas >= 2.91.92
