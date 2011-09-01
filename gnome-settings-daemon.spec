@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.1.4
+Version:	3.1.90
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	3021a355a13f7b4b6c385e5a10fbf3ee
+# Source0-md5:	cbabea16e9bacffae863f78ac7ea59b1
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
@@ -121,6 +121,7 @@ fi
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %attr(755,root,root) %{_libexecdir}/gnome-fallback-mount-helper
 %attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
+%attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-datetime-mechanism
 %attr(755,root,root) %{_libexecdir}/gsd-printer
@@ -173,6 +174,7 @@ fi
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/gnome-settings-daemon-3.0
 %{_datadir}/polkit-1/actions/org.gnome.settingsdaemon.datetimemechanism.policy
+%{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svg
 %{_mandir}/man1/gnome-settings-daemon.1*
