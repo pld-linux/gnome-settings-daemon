@@ -6,8 +6,8 @@ Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	cbabea16e9bacffae863f78ac7ea59b1
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.1/%{name}-%{version}.tar.xz
+# Source0-md5:	f264afedfebe8c643700a63526c45842
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
