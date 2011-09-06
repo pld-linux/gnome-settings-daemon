@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.1.90
+Version:	3.1.91
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.1/%{name}-%{version}.tar.xz
-# Source0-md5:	f264afedfebe8c643700a63526c45842
+# Source0-md5:	6162432ffa80e60775ddd8b10d0f47df
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
@@ -38,6 +38,7 @@ BuildRequires:	polkit-devel >= 0.97
 BuildRequires:	pulseaudio-devel >= 0.9.16
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.9.1
 BuildRequires:	xorg-lib-libX11-devel
@@ -45,6 +46,7 @@ BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
+BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	gnome-desktop >= 3.1.4
 Requires:	gsettings-desktop-schemas >= 2.91.92
@@ -178,7 +180,7 @@ fi
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svg
 %{_mandir}/man1/gnome-settings-daemon.1*
-%{_sysconfdir}/dbus-1/system.d/org.gnome.SettingsDaemon.DateTimeMechanism.conf
+/etc/dbus-1/system.d/org.gnome.SettingsDaemon.DateTimeMechanism.conf
 %{_sysconfdir}/xdg/autostart/gnome-fallback-mount-helper.desktop
 %{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
 
