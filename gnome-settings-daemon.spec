@@ -22,16 +22,18 @@ BuildRequires:	dbus-devel >= 1.2.0
 BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.26.0
-BuildRequires:	gnome-desktop-devel >= 3.1.4
-BuildRequires:	gsettings-desktop-schemas-devel >= 2.91.92
+BuildRequires:	glib2-devel >= 1:2.29.14
+BuildRequires:	gnome-desktop-devel >= 3.1.5
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.1.91
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.40.0
+BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
-BuildRequires:	libgnomekbd-devel >= 2.91.5
-BuildRequires:	libnotify-devel >= 0.6.1
+BuildRequires:	libgnomekbd-devel >= 3.0.0
+BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 5.0
+BuildRequires:	nss-devel >= 3.11.2
 BuildRequires:	nss-devel >= 3.11.2
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.97
@@ -48,8 +50,8 @@ BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
-Requires:	gnome-desktop >= 3.1.4
-Requires:	gsettings-desktop-schemas >= 2.91.92
+Requires:	gnome-desktop >= 3.1.5
+Requires:	gsettings-desktop-schemas >= 3.1.91
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
@@ -68,7 +70,7 @@ Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNO
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
 Requires:	dbus-glib-devel >= 0.74
-Requires:	glib2-devel >= 1:2.26.0
+Requires:	glib2-devel >= 1:2.29.14
 # doesn't require base currently
 
 %description devel
