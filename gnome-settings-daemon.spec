@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.1.91
+Version:	3.1.92
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.1/%{name}-%{version}.tar.xz
-# Source0-md5:	6162432ffa80e60775ddd8b10d0f47df
+# Source0-md5:	b001bda8ba244c43397511adced36114
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
@@ -16,7 +16,7 @@ BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	PackageKit-devel >= 0.6.13
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
-BuildRequires:	colord-devel >= 0.1.9
+BuildRequires:	colord-devel >= 0.1.12
 BuildRequires:	cups-devel
 BuildRequires:	dbus-devel >= 1.2.0
 BuildRequires:	dbus-glib-devel >= 0.74
