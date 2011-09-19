@@ -34,7 +34,6 @@ BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	libtool
 BuildRequires:	libxklavier-devel >= 5.0
 BuildRequires:	nss-devel >= 3.11.2
-BuildRequires:	nss-devel >= 3.11.2
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.97
 BuildRequires:	pulseaudio-devel >= 0.9.16
