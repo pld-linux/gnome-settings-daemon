@@ -92,7 +92,8 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %{__autoconf}
 %{__automake}
 %configure \
-	--disable-silent-rules
+	--disable-silent-rules \
+	--with-pnpids=%{_datadir}/libgnome-desktop-3.0/pnp.ids
 %{__make}
 
 %install
