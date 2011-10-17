@@ -3,15 +3,14 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.2.0
-Release:	2
+Version:	3.2.1
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	418c880430529c91e0503c22c8db8774
+# Source0-md5:	a410fc235418ac74c5a79cb0fd5a3199
 Patch0:		%{name}-pa-reconnect.patch
-Patch1:		power-dbus-signal.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
 URL:		http://www.gnome.org/
@@ -85,7 +84,6 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 %patch100 -p1
 
 %build
