@@ -3,13 +3,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.2.1
+Version:	3.2.2
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	a410fc235418ac74c5a79cb0fd5a3199
+# Source0-md5:	eb21af36feace3529965ebe17a063d63
 Patch0:		%{name}-pa-reconnect.patch
 # PLD-specific patches
 Patch100:	use-etc-sysconfig-timezone.patch
@@ -24,9 +24,9 @@ BuildRequires:	dbus-devel >= 1.2.0
 BuildRequires:	dbus-glib-devel >= 0.74
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.29.14
-BuildRequires:	gnome-desktop-devel >= 3.1.5
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.1.91
+BuildRequires:	glib2-devel >= 1:2.30.0
+BuildRequires:	gnome-desktop-devel >= 3.2.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.2.0
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
@@ -51,8 +51,8 @@ BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
-Requires:	gnome-desktop >= 3.1.5
-Requires:	gsettings-desktop-schemas >= 3.1.91
+Requires:	gnome-desktop >= 3.2.0
+Requires:	gsettings-desktop-schemas >= 3.2.0
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
@@ -72,7 +72,7 @@ Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNO
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
 Requires:	dbus-glib-devel >= 0.74
-Requires:	glib2-devel >= 1:2.29.14
+Requires:	glib2-devel >= 1:2.30.0
 # doesn't require base currently
 
 %description devel
