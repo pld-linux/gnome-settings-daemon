@@ -3,7 +3,7 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.3.90.1
+Version:	3.3.91
 Release:	1
 Epoch:		1
 License:	GPL v2+
@@ -130,6 +130,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-printer
+%attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-settings.so
@@ -137,6 +138,7 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libclipboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcolor.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcursor.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsd.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsdwacom.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libhousekeeping.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libkeyboard.so
@@ -176,6 +178,7 @@ fi
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/gnome-settings-daemon-3.0
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
+%{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svg
 %{_mandir}/man1/gnome-settings-daemon.1*
