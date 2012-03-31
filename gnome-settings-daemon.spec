@@ -2,13 +2,13 @@
 # - (gnome-settings-daemon:8918): updates-plugin-WARNING **: failed to open directory: Error opening directory '/run/udev/firmware-missing': Permission denied
 #
 # Conditiional build:
-%bcond_with	systemd # rely on systemd for session tracking instead of ConsoleKit
+%bcond_without	systemd # by default use systemd for session tracking instead of ConsoleKit (fallback to ConsoleKit on runtime)
 #
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	3.4.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -41,6 +41,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 0.9.16
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
+%{?with_systemd:BuildRequires:  systemd-devel}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.9.11
