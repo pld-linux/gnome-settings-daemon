@@ -16,7 +16,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.4/%{name
 # Source0-md5:	c58f2656315e96a3e56c8e73c709f20e
 Patch0:		%{name}-pa-reconnect.patch
 Patch1:		%{name}-link.patch
-%{?with_systemd:Patch2: systemd-fallback.patch}
+Patch2:		systemd-fallback.patch
 URL:		http://www.gnome.org/
 BuildRequires:	PackageKit-devel >= 0.6.13
 BuildRequires:	autoconf >= 2.60
