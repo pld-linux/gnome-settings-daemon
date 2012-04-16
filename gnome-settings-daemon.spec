@@ -7,13 +7,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.4.0
-Release:	3
+Version:	3.4.1
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	c58f2656315e96a3e56c8e73c709f20e
+# Source0-md5:	28144a0c69556cf1915a8e43c25a2869
 Patch0:		%{name}-pa-reconnect.patch
 Patch1:		%{name}-link.patch
 Patch2:		systemd-fallback.patch
@@ -25,10 +25,10 @@ BuildRequires:	colord-devel >= 0.1.12
 BuildRequires:	cups-devel
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.31.0
-BuildRequires:	gnome-desktop-devel >= 3.3.92
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.3.0
-BuildRequires:	gtk+3-devel >= 3.3.4
+BuildRequires:	glib2-devel >= 1:2.32.0
+BuildRequires:	gnome-desktop-devel >= 3.4.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.4.0
+BuildRequires:	gtk+3-devel >= 3.4.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -54,10 +54,10 @@ BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.31.0
-Requires:	gnome-desktop >= 3.3.4
-Requires:	gsettings-desktop-schemas >= 3.3.0
-Requires:	gtk+3 >= 3.3.4
+Requires(post,postun):	glib2 >= 1:2.32.0
+Requires:	gnome-desktop >= 3.4.0
+Requires:	gsettings-desktop-schemas >= 3.4.0
+Requires:	gtk+3 >= 3.4.0
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
@@ -76,7 +76,7 @@ Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
-Requires:	glib2-devel >= 1:2.31.0
+Requires:	glib2-devel >= 1:2.32.0
 # doesn't require base currently
 
 %description devel
