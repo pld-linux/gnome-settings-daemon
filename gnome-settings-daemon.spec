@@ -7,13 +7,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.4.1
+Version:	3.4.2
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	28144a0c69556cf1915a8e43c25a2869
+# Source0-md5:	f8c985ce46c720cff28208ccb799c6b7
 Patch0:		%{name}-pa-reconnect.patch
 Patch1:		%{name}-link.patch
 Patch2:		systemd-fallback.patch
