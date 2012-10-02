@@ -2,23 +2,25 @@
 # - (gnome-settings-daemon:8918): updates-plugin-WARNING **: failed to open directory: Error opening directory '/run/udev/firmware-missing': Permission denied
 #
 # Conditiional build:
-%bcond_without	systemd # by default use systemd for session tracking instead of ConsoleKit (fallback to ConsoleKit on runtime)
+%bcond_with	ibus		# ibus support need no yet released ibus 1.5 or at least devel 1.4.99 version
+%bcond_with	packagekit	# packagekit 0.8.x doesn not supports poldek yet
+%bcond_without	systemd 	# by default use systemd for session tracking instead of ConsoleKit (fallback to ConsoleKit on runtime)
 #
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.4.2
-Release:	1
+Version:	3.6.0
+Release:	0.1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	f8c985ce46c720cff28208ccb799c6b7
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.6/%{name}-%{version}.tar.xz
+# Source0-md5:	50eb4c88f0be6b36e5f829a6a57a6ce6
 Patch0:		%{name}-pa-reconnect.patch
 Patch1:		%{name}-link.patch
 Patch2:		systemd-fallback.patch
 URL:		http://www.gnome.org/
-BuildRequires:	PackageKit-devel >= 0.6.13
+%{?with_packagekit:BuildRequires:	PackageKit-devel >= 0.8.0}
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= 0.1.12
@@ -26,17 +28,16 @@ BuildRequires:	cups-devel
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.32.0
-BuildRequires:	gnome-desktop-devel >= 3.4.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.4.0
+BuildRequires:	gnome-desktop-devel >= 3.6.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.6.0
 BuildRequires:	gtk+3-devel >= 3.4.0
+%{?with_ibus:BuildRequires:	ibus-devel >= 1.4.99}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
-BuildRequires:	libgnomekbd-devel >= 3.0.0
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	libtool
-BuildRequires:	libwacom-devel >= 0.3
-BuildRequires:	libxklavier-devel >= 5.0
+BuildRequires:	libwacom-devel >= 0.6
 BuildRequires:	nss-devel >= 3.11.2
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 0.9.16
@@ -55,8 +56,8 @@ BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.32.0
-Requires:	gnome-desktop >= 3.4.0
-Requires:	gsettings-desktop-schemas >= 3.4.0
+Requires:	gnome-desktop >= 3.6.0
+Requires:	gsettings-desktop-schemas >= 3.6.0
 Requires:	gtk+3 >= 3.4.0
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -85,11 +86,19 @@ Header file for developing GNOME Settings Daemon clients.
 %description devel -l pl.UTF-8
 Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 
+%package updates
+Summary:	Updates plugin for GNOME Settings Daemon
+Group:		Libraries
+Requires:       %{name} = %{version}-%{release}
+
+%description updates
+Updates plugin for GNOME Settings Daemon.
+
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%{?with_systemd:%patch2 -p1}
+#{?with_systemd:%patch2 -p1}
 
 %build
 %{__glib_gettextize}
@@ -101,6 +110,8 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %{__automake}
 %configure \
 	%{__enable_disable systemd systemd} \
+	%{__enable_disable packagkit packagekit} \
+	%{__enable_disable ibus ibus} \
 	--disable-silent-rules
 %{__make}
 
@@ -134,6 +145,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gnome-fallback-mount-helper
 %attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
+%attr(755,root,root) %{_libexecdir}/gsd-input-sources-switcher
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-printer
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
@@ -155,7 +167,6 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libupdates.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxsettings.so
 %{_libdir}/gnome-settings-daemon-3.0/a11y-keyboard.gnome-settings-plugin
@@ -173,13 +184,11 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/updates.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
-%{_datadir}/dbus-1/services/org.gnome.SettingsDaemon.service
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/gnome-settings-daemon-3.0
@@ -193,6 +202,29 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/gsd-list-wacom
+%attr(755,root,root) %{_libexecdir}/gsd-test-a11y-keyboard
+%attr(755,root,root) %{_libexecdir}/gsd-test-a11y-settings
+%attr(755,root,root) %{_libexecdir}/gsd-test-background
+%attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
+%attr(755,root,root) %{_libexecdir}/gsd-test-keyboard
+%attr(755,root,root) %{_libexecdir}/gsd-test-media-keys
+%attr(755,root,root) %{_libexecdir}/gsd-test-mouse
+%attr(755,root,root) %{_libexecdir}/gsd-test-orientation
+%attr(755,root,root) %{_libexecdir}/gsd-test-power
+%attr(755,root,root) %{_libexecdir}/gsd-test-print-notifications
+%attr(755,root,root) %{_libexecdir}/gsd-test-smartcard
+%attr(755,root,root) %{_libexecdir}/gsd-test-sound
+%attr(755,root,root) %{_libexecdir}/gsd-test-wacom
+%attr(755,root,root) %{_libexecdir}/gsd-test-xsettings
 %{_includedir}/gnome-settings-daemon-3.0
 %{_pkgconfigdir}/gnome-settings-daemon.pc
+
+%if %{with packagekit}
+%files updates
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libupdates.so
+%{_libdir}/gnome-settings-daemon-3.0/updates.gnome-settings-plugin
 %{_datadir}/dbus-1/interfaces/org.gnome.SettingsDaemonUpdates.xml
+%{_datadir}/dbus-1/services/org.gnome.SettingsDaemon.service
+%endif
