@@ -1,5 +1,18 @@
---- gnome-settings-daemon-3.6.0/gnome-settings-daemon/gnome-settings-session.c.old	2012-10-02 21:47:26.463470258 +0200
-+++ gnome-settings-daemon-3.6.0/gnome-settings-daemon/gnome-settings-session.c	2012-10-02 21:46:30.047109277 +0200
+diff -uNr gnome-settings-daemon-3.6.0/configure.ac gnome-settings-daemon-3.6.0.new/configure.ac
+--- gnome-settings-daemon-3.6.0/configure.ac	2012-09-25 10:36:08.000000000 +0200
++++ gnome-settings-daemon-3.6.0.new/configure.ac	2012-10-03 20:20:58.796757197 +0200
+@@ -347,7 +347,7 @@
+               [with_systemd=$enableval],
+               [with_systemd=no])
+ if test "$with_systemd" = "yes" ; then
+-  PKG_CHECK_MODULES(SYSTEMD, [libsystemd-login])
++  PKG_CHECK_MODULES(SYSTEMD, [libsystemd-daemon libsystemd-login])
+   AC_DEFINE(HAVE_SYSTEMD, 1, [Define if systemd is used for session tracking])
+   SESSION_TRACKING=systemd
+ else
+diff -uNr gnome-settings-daemon-3.6.0/gnome-settings-daemon/gnome-settings-session.c gnome-settings-daemon-3.6.0.new/gnome-settings-daemon/gnome-settings-session.c
+--- gnome-settings-daemon-3.6.0/gnome-settings-daemon/gnome-settings-session.c	2012-02-15 19:21:07.000000000 +0100
++++ gnome-settings-daemon-3.6.0.new/gnome-settings-daemon/gnome-settings-session.c	2012-10-03 20:20:58.796757197 +0200
 @@ -30,6 +30,7 @@
  #include "gnome-settings-session.h"
  
@@ -8,7 +21,7 @@
  #include <systemd/sd-login.h>
  
  typedef struct
-@@ -130,10 +131,9 @@ struct GnomeSettingsSessionPrivate
+@@ -130,10 +131,9 @@
  {
  #ifdef HAVE_SYSTEMD
          GSource                   *sd_source;
@@ -20,7 +33,7 @@
  	gchar			*session_id;
  	GnomeSettingsSessionState state;
  };
-@@ -237,7 +237,7 @@ sessions_changed (gpointer user_data)
+@@ -237,7 +237,7 @@
          return TRUE;
  }
  
@@ -29,7 +42,7 @@
  
  static void
  gnome_settings_session_proxy_signal_cb (GDBusProxy *proxy,
-@@ -371,22 +371,26 @@ got_manager_proxy_cb (GObject *source_ob
+@@ -371,22 +371,26 @@
  	g_object_unref (proxy_manager);
  }
  
@@ -66,7 +79,7 @@
  	session->priv->cancellable = g_cancellable_new ();
  
  	/* connect to ConsoleKit */
-@@ -399,7 +403,6 @@ gnome_settings_session_init (GnomeSettin
+@@ -399,7 +403,6 @@
  				  session->priv->cancellable,
  				  got_manager_proxy_cb,
  				  session);
@@ -74,7 +87,7 @@
  }
  
  static void
-@@ -415,15 +418,16 @@ gnome_settings_session_finalize (GObject
+@@ -415,15 +418,16 @@
          if (session->priv->sd_source != NULL) {
                  g_source_destroy (session->priv->sd_source);
                  g_source_unref (session->priv->sd_source);
@@ -93,9 +106,10 @@
  	G_OBJECT_CLASS (gnome_settings_session_parent_class)->finalize (object);
  }
  
---- gnome-settings-daemon-3.6.0/plugins/common/gsd-power-helper.c.old	2012-10-02 21:33:48.061237388 +0200
-+++ gnome-settings-daemon-3.6.0/plugins/common/gsd-power-helper.c	2012-10-02 21:43:37.094712921 +0200
-@@ -79,7 +79,7 @@ systemd_hibernate (void)
+diff -uNr gnome-settings-daemon-3.6.0/plugins/common/gsd-power-helper.c gnome-settings-daemon-3.6.0.new/plugins/common/gsd-power-helper.c
+--- gnome-settings-daemon-3.6.0/plugins/common/gsd-power-helper.c	2012-09-17 18:48:45.000000000 +0200
++++ gnome-settings-daemon-3.6.0.new/plugins/common/gsd-power-helper.c	2012-10-03 20:20:58.796757197 +0200
+@@ -79,7 +79,7 @@
          g_object_unref (bus);
  }
  
@@ -104,7 +118,7 @@
  
  static void
  consolekit_stop_cb (GObject *source_object,
-@@ -170,34 +170,37 @@ upower_hibernate (GDBusProxy *upower_pro
+@@ -170,34 +170,37 @@
                             -1, NULL,
                             upower_sleep_cb, NULL);
  }
@@ -152,3 +166,22 @@
  #endif
 +		upower_hibernate (upower_proxy);
  }
+diff -uNr gnome-settings-daemon-3.6.0/plugins/common/Makefile.am gnome-settings-daemon-3.6.0.new/plugins/common/Makefile.am
+--- gnome-settings-daemon-3.6.0/plugins/common/Makefile.am	2012-09-17 18:48:45.000000000 +0200
++++ gnome-settings-daemon-3.6.0.new/plugins/common/Makefile.am	2012-10-03 20:24:52.764019870 +0200
+@@ -17,6 +17,7 @@
+ 	$(PLUGIN_CFLAGS)		\
+ 	$(SETTINGS_PLUGIN_CFLAGS)	\
+ 	$(COMMON_CFLAGS)		\
++	$(SYSTEMD_CFLAGS)		\
+ 	$(AM_CFLAGS)
+ 
+ libcommon_la_LDFLAGS = \
+@@ -24,6 +25,7 @@
+ 
+ libcommon_la_LIBADD  = \
+ 	$(SETTINGS_PLUGIN_LIBS)		\
++	$(SYSTEMD_LIBS)			\
+ 	$(COMMON_LIBS)
+ 
+ libexec_PROGRAMS = gsd-test-input-helper
