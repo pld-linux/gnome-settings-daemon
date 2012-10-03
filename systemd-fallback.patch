@@ -1,30 +1,5 @@
-commit b9ded09387f0b99ece97baee18595eb9e86a5b9b
-Author: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
-Date:   Mon Mar 12 01:52:54 2012 +0100
-
-    Fallback to CK if systemd is not available
-    
-    Be nice to distributions where systemd is optional. This will select
-    the code path at runtime depending on whether the system was booted
-    using systemd.
-
-diff --git a/configure.ac b/configure.ac
-index 3b4789f..d522852 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -299,7 +299,7 @@ AC_ARG_ENABLE([systemd],
-               [with_systemd=$enableval],
-               [with_systemd=no])
- if test "$with_systemd" = "yes" ; then
--  PKG_CHECK_MODULES(SYSTEMD, [libsystemd-login])
-+  PKG_CHECK_MODULES(SYSTEMD, [libsystemd-daemon libsystemd-login])
-   AC_DEFINE(HAVE_SYSTEMD, 1, [Define if systemd is used for session tracking])
-   SESSION_TRACKING=systemd
- else
-diff --git a/gnome-settings-daemon/gnome-settings-session.c b/gnome-settings-daemon/gnome-settings-session.c
-index 5786300..83fe21e 100644
---- a/gnome-settings-daemon/gnome-settings-session.c
-+++ b/gnome-settings-daemon/gnome-settings-session.c
+--- gnome-settings-daemon-3.6.0/gnome-settings-daemon/gnome-settings-session.c.old	2012-10-02 21:47:26.463470258 +0200
++++ gnome-settings-daemon-3.6.0/gnome-settings-daemon/gnome-settings-session.c	2012-10-02 21:46:30.047109277 +0200
 @@ -30,6 +30,7 @@
  #include "gnome-settings-session.h"
  
@@ -54,7 +29,7 @@ index 5786300..83fe21e 100644
  
  static void
  gnome_settings_session_proxy_signal_cb (GDBusProxy *proxy,
-@@ -371,22 +371,25 @@ got_manager_proxy_cb (GObject *source_object, GAsyncResult *res, gpointer user_d
+@@ -371,22 +371,26 @@ got_manager_proxy_cb (GObject *source_ob
  	g_object_unref (proxy_manager);
  }
  
@@ -67,28 +42,31 @@ index 5786300..83fe21e 100644
  
  #ifdef HAVE_SYSTEMD
 -        sd_pid_get_session (getpid(), &session->priv->session_id);
-+        session->priv->sd_source = NULL;
-+
-+        if (sd_booted () > 0) {
-+                sd_pid_get_session (getpid(), &session->priv->session_id);
- 
+-
 -        session->priv->sd_source = sd_source_new ();
 -        g_source_set_callback (session->priv->sd_source, sessions_changed, session, NULL);
 -        g_source_attach (session->priv->sd_source, NULL);
-+                session->priv->sd_source = sd_source_new ();
-+                g_source_set_callback (session->priv->sd_source, sessions_changed, session, NULL);
-+                g_source_attach (session->priv->sd_source, NULL);
- 
+-
 -        sessions_changed (session);
 -#else
-+                sessions_changed (session);
-+                return;
++	session->priv->sd_source = NULL;
++	
++	if (sd_booted () > 0) {
++    		sd_pid_get_session (getpid(), &session->priv->session_id);
++
++    		session->priv->sd_source = sd_source_new ();
++    		g_source_set_callback (session->priv->sd_source, sessions_changed, session, NULL);
++    		g_source_attach (session->priv->sd_source, NULL);
++
++    		sessions_changed (session);
++    	
++    		return;
 +        }
 +#endif
  	session->priv->cancellable = g_cancellable_new ();
  
  	/* connect to ConsoleKit */
-@@ -399,7 +402,6 @@ gnome_settings_session_init (GnomeSettingsSession *session)
+@@ -399,7 +403,6 @@ gnome_settings_session_init (GnomeSettin
  				  session->priv->cancellable,
  				  got_manager_proxy_cb,
  				  session);
@@ -96,7 +74,7 @@ index 5786300..83fe21e 100644
  }
  
  static void
-@@ -415,15 +417,17 @@ gnome_settings_session_finalize (GObject *object)
+@@ -415,15 +418,16 @@ gnome_settings_session_finalize (GObject
          if (session->priv->sd_source != NULL) {
                  g_source_destroy (session->priv->sd_source);
                  g_source_unref (session->priv->sd_source);
@@ -104,7 +82,6 @@ index 5786300..83fe21e 100644
          }
 -#else
 +#endif
-+
  	g_cancellable_cancel (session->priv->cancellable);
  
  	if (session->priv->proxy_session != NULL)
@@ -116,39 +93,62 @@ index 5786300..83fe21e 100644
  	G_OBJECT_CLASS (gnome_settings_session_parent_class)->finalize (object);
  }
  
-diff --git a/plugins/power/gsd-power-manager.c b/plugins/power/gsd-power-manager.c
-index 8db04e5..9883d76 100644
---- a/plugins/power/gsd-power-manager.c
-+++ b/plugins/power/gsd-power-manager.c
-@@ -2031,7 +2031,7 @@ systemd_stop (void)
+--- gnome-settings-daemon-3.6.0/plugins/common/gsd-power-helper.c.old	2012-10-02 21:33:48.061237388 +0200
++++ gnome-settings-daemon-3.6.0/plugins/common/gsd-power-helper.c	2012-10-02 21:43:37.094712921 +0200
+@@ -79,7 +79,7 @@ systemd_hibernate (void)
          g_object_unref (bus);
  }
  
--#else
-+#endif
+-#else /* HAVE_SYSTEMD */
++#endif /* HAVE_SYSTEMD */
  
  static void
  consolekit_stop_cb (GObject *source_object,
-@@ -2081,7 +2081,6 @@ consolekit_stop (void)
-                            consolekit_stop_cb, NULL);
-         g_object_unref (proxy);
+@@ -170,34 +170,37 @@ upower_hibernate (GDBusProxy *upower_pro
+                            -1, NULL,
+                            upower_sleep_cb, NULL);
  }
--#endif
+-#endif /* HAVE_SYSTEMD */
++
  
- static void
- upower_sleep_cb (GObject *source_object,
-@@ -2135,10 +2134,11 @@ do_power_action_type (GsdPowerManager *manager,
-                  * hibernate is not available and is marginally better
-                  * than just powering down the computer mid-write */
+ void
+ gsd_power_suspend (GDBusProxy *upower_proxy)
+ {
  #ifdef HAVE_SYSTEMD
--                systemd_stop ();
+-	systemd_suspend ();
 -#else
--                consolekit_stop ();
-+                if (sd_booted () > 0)
-+                        systemd_stop ();
-+                else
+-	upower_suspend (upower_proxy);
++	if (sd_booted () > 0)
++		systemd_suspend ();
++	else
  #endif
-+                        consolekit_stop ();
-                 break;
-         case GSD_POWER_ACTION_BLANK:
-                 ret = gnome_rr_screen_set_dpms_mode (manager->priv->x11_screen,
++		upower_suspend (upower_proxy);
+ }
+ 
+ void
+ gsd_power_poweroff (void)
+ {
+ #ifdef HAVE_SYSTEMD
+-	systemd_stop ();
+-#else
+-	consolekit_stop ();
++	if (sd_booted () > 0)
++		systemd_stop ();
++	else
+ #endif
++		consolekit_stop ();
+ }
+ 
+ void
+ gsd_power_hibernate (GDBusProxy *upower_proxy)
+ {
+ #ifdef HAVE_SYSTEMD
+-	systemd_hibernate ();
+-#else
+-	upower_hibernate (upower_proxy);
++	if (sd_booted () > 0)
++		systemd_hibernate ();
++	else
+ #endif
++		upower_hibernate (upower_proxy);
+ }

@@ -98,7 +98,7 @@ Updates plugin for GNOME Settings Daemon.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-#{?with_systemd:%patch2 -p1}
+%{?with_systemd:%patch2 -p1}
 
 %build
 %{__glib_gettextize}
