@@ -3,19 +3,19 @@
 #
 # Conditiional build:
 %bcond_with	ibus		# ibus support need no yet released ibus 1.5 or at least devel 1.4.99 version
-%bcond_with	packagekit	# packagekit 0.8.x doesn not supports poldek yet
+%bcond_without	packagekit	# packagekit 0.8.x doesn not supports poldek yet
 %bcond_without	systemd 	# by default use systemd for session tracking instead of ConsoleKit (fallback to ConsoleKit on runtime)
 #
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.6.0
+Version:	3.6.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	50eb4c88f0be6b36e5f829a6a57a6ce6
+# Source0-md5:	27ea0c6ee61a1b3cb5d8e3e0cd10107c
 Patch0:		%{name}-pa-reconnect.patch
 Patch1:		%{name}-link.patch
 Patch2:		systemd-fallback.patch
@@ -110,7 +110,7 @@ Updates plugin for GNOME Settings Daemon.
 %{__automake}
 %configure \
 	%{__enable_disable systemd systemd} \
-	%{__enable_disable packagkit packagekit} \
+	%{__enable_disable packagekit packagekit} \
 	%{__enable_disable ibus ibus} \
 	--disable-silent-rules
 %{__make}
@@ -226,5 +226,4 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libupdates.so
 %{_libdir}/gnome-settings-daemon-3.0/updates.gnome-settings-plugin
 %{_datadir}/dbus-1/interfaces/org.gnome.SettingsDaemonUpdates.xml
-%{_datadir}/dbus-1/services/org.gnome.SettingsDaemon.service
 %endif
