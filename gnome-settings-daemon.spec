@@ -10,7 +10,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	3.6.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -89,7 +89,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %package updates
 Summary:	Updates plugin for GNOME Settings Daemon
 Group:		Libraries
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description updates
 Updates plugin for GNOME Settings Daemon.
