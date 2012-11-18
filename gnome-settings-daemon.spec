@@ -2,20 +2,20 @@
 # - (gnome-settings-daemon:8918): updates-plugin-WARNING **: failed to open directory: Error opening directory '/run/udev/firmware-missing': Permission denied
 #
 # Conditiional build:
-%bcond_with	ibus		# ibus support need no yet released ibus 1.5 or at least devel 1.4.99 version
+%bcond_without	ibus		# ibus support need no yet released ibus 1.5 or at least devel 1.4.99 version
 %bcond_without	packagekit	# packagekit 0.8.x doesn not supports poldek yet
 %bcond_without	systemd 	# by default use systemd for session tracking instead of ConsoleKit (fallback to ConsoleKit on runtime)
 #
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.6.1
-Release:	2
+Version:	3.6.3
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	27ea0c6ee61a1b3cb5d8e3e0cd10107c
+# Source0-md5:	1736e7305439b027cc7c2de2899ded69
 Patch0:		%{name}-pa-reconnect.patch
 Patch1:		%{name}-link.patch
 Patch2:		systemd-fallback.patch
@@ -189,6 +189,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
+%{_datadir}/dbus-1/services/org.freedesktop.IBus.service
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/gnome-settings-daemon-3.0
