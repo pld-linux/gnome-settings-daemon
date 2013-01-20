@@ -9,13 +9,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.6.3
+Version:	3.6.4
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	1736e7305439b027cc7c2de2899ded69
+# Source0-md5:	362803ee1f1a0aa02e3c7df61ef82309
 Patch0:		%{name}-pa-reconnect.patch
 Patch1:		%{name}-link.patch
 Patch2:		systemd-fallback.patch
@@ -89,7 +89,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %package updates
 Summary:	Updates plugin for GNOME Settings Daemon
 Group:		Libraries
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description updates
 Updates plugin for GNOME Settings Daemon.
@@ -148,6 +148,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-input-sources-switcher
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-printer
+%attr(755,root,root) %{_libexecdir}/gsd-test-screensaver-proxy
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
@@ -165,6 +166,7 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liborientation.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libpower.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libscreensaver-proxy.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
@@ -182,6 +184,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/orientation.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/power.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/screensaver-proxy.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
