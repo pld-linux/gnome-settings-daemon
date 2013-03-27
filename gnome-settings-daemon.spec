@@ -4,21 +4,17 @@
 # Conditiional build:
 %bcond_without	ibus		# ibus support need no yet released ibus 1.5 or at least devel 1.4.99 version
 %bcond_without	packagekit	# packagekit 0.8.x doesn not supports poldek yet
-%bcond_without	systemd 	# by default use systemd for session tracking instead of ConsoleKit (fallback to ConsoleKit on runtime)
 #
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.6.4
+Version:	3.8.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	362803ee1f1a0aa02e3c7df61ef82309
-Patch0:		%{name}-pa-reconnect.patch
-Patch1:		%{name}-link.patch
-Patch2:		systemd-fallback.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.8/%{name}-%{version}.tar.xz
+# Source0-md5:	e2a3a635088f896496c84733a0a7a605
 URL:		http://www.gnome.org/
 %{?with_packagekit:BuildRequires:	PackageKit-devel >= 0.8.0}
 BuildRequires:	autoconf >= 2.60
@@ -27,23 +23,23 @@ BuildRequires:	colord-devel >= 0.1.12
 BuildRequires:	cups-devel
 BuildRequires:	fontconfig-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.32.0
-BuildRequires:	gnome-desktop-devel >= 3.6.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.6.0
-BuildRequires:	gtk+3-devel >= 3.4.0
+BuildRequires:	glib2-devel >= 1:2.35.4
+BuildRequires:	gnome-desktop-devel >= 3.7.90
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.7.2.1
+BuildRequires:	gtk+3-devel >= 3.7.8
 %{?with_ibus:BuildRequires:	ibus-devel >= 1.4.99}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
 BuildRequires:	libnotify-devel >= 0.7.3
+BuildRequires:	librsvg-devel >= 2.36.2
 BuildRequires:	libtool
-BuildRequires:	libwacom-devel >= 0.6
+BuildRequires:	libwacom-devel >= 0.7
 BuildRequires:	nss-devel >= 3.11.2
 BuildRequires:	pkgconfig
-BuildRequires:	pulseaudio-devel >= 0.9.16
+BuildRequires:	pulseaudio-devel >= 2.0
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
-%{?with_systemd:BuildRequires:  systemd-devel}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.9.11
@@ -55,10 +51,10 @@ BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.32.0
-Requires:	gnome-desktop >= 3.6.0
-Requires:	gsettings-desktop-schemas >= 3.6.0
-Requires:	gtk+3 >= 3.4.0
+Requires(post,postun):	glib2 >= 1:2.35.3
+Requires:	gnome-desktop >= 3.7.90
+Requires:	gsettings-desktop-schemas >= 3.7.2.1
+Requires:	gtk+3 >= 3.7.8
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
@@ -77,7 +73,7 @@ Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
-Requires:	glib2-devel >= 1:2.32.0
+Requires:	glib2-devel >= 1:2.35.3
 # doesn't require base currently
 
 %description devel
@@ -96,9 +92,6 @@ Updates plugin for GNOME Settings Daemon.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%{?with_systemd:%patch2 -p1}
 
 %build
 %{__glib_gettextize}
@@ -109,7 +102,6 @@ Updates plugin for GNOME Settings Daemon.
 %{__autoconf}
 %{__automake}
 %configure \
-	%{__enable_disable systemd systemd} \
 	%{__enable_disable packagekit packagekit} \
 	%{__enable_disable ibus ibus} \
 	--disable-silent-rules
@@ -142,7 +134,6 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
-%attr(755,root,root) %{_libexecdir}/gnome-fallback-mount-helper
 %attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
 %attr(755,root,root) %{_libexecdir}/gsd-input-sources-switcher
@@ -153,7 +144,6 @@ fi
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-settings.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libbackground.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libclipboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcolor.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcursor.so
@@ -166,14 +156,13 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liborientation.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libpower.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libremote-display.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libscreensaver-proxy.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxsettings.so
 %{_libdir}/gnome-settings-daemon-3.0/a11y-keyboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/a11y-settings.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/background.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/clipboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/color.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/cursor.gnome-settings-plugin
@@ -184,8 +173,8 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/orientation.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/power.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/remote-display.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/screensaver-proxy.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
@@ -201,7 +190,6 @@ fi
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svg
 %{_mandir}/man1/gnome-settings-daemon.1*
-%{_sysconfdir}/xdg/autostart/gnome-fallback-mount-helper.desktop
 %{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
 
 %files devel
@@ -209,17 +197,19 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-list-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-settings
-%attr(755,root,root) %{_libexecdir}/gsd-test-background
+%attr(755,root,root) %{_libexecdir}/gsd-test-cursor
+%attr(755,root,root) %{_libexecdir}/gsd-test-housekeeping
 %attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
 %attr(755,root,root) %{_libexecdir}/gsd-test-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-test-media-keys
 %attr(755,root,root) %{_libexecdir}/gsd-test-mouse
 %attr(755,root,root) %{_libexecdir}/gsd-test-orientation
-%attr(755,root,root) %{_libexecdir}/gsd-test-power
 %attr(755,root,root) %{_libexecdir}/gsd-test-print-notifications
-%attr(755,root,root) %{_libexecdir}/gsd-test-smartcard
+%attr(755,root,root) %{_libexecdir}/gsd-test-remote-display
 %attr(755,root,root) %{_libexecdir}/gsd-test-sound
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom
+%attr(755,root,root) %{_libexecdir}/gsd-test-wacom-osd
+%attr(755,root,root) %{_libexecdir}/gsd-test-xrandr
 %attr(755,root,root) %{_libexecdir}/gsd-test-xsettings
 %{_includedir}/gnome-settings-daemon-3.0
 %{_pkgconfigdir}/gnome-settings-daemon.pc
@@ -229,5 +219,4 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libupdates.so
 %{_libdir}/gnome-settings-daemon-3.0/updates.gnome-settings-plugin
-%{_datadir}/dbus-1/interfaces/org.gnome.SettingsDaemonUpdates.xml
 %endif
