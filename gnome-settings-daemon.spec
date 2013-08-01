@@ -8,13 +8,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.8.3
+Version:	3.8.4
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	fb783e7d118e4425b3bd94d439633899
+# Source0-md5:	7be3d2bd2b1ad8a5987d64042712c3eb
 URL:		http://www.gnome.org/
 %{?with_packagekit:BuildRequires:	PackageKit-devel >= 0.8.0}
 BuildRequires:	autoconf >= 2.60
@@ -135,6 +135,7 @@ fi
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
+%attr(755,root,root) %{_libexecdir}/gnome-settings-daemon-localeexec
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-printer
