@@ -8,13 +8,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.8.4
+Version:	3.10.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	7be3d2bd2b1ad8a5987d64042712c3eb
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.10/%{name}-%{version}.tar.xz
+# Source0-md5:	862cfdedc0f4ad45d2919a27581c259b
 URL:		http://www.gnome.org/
 %{?with_packagekit:BuildRequires:	PackageKit-devel >= 0.8.0}
 BuildRequires:	autoconf >= 2.60
@@ -22,21 +22,27 @@ BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= 0.1.12
 BuildRequires:	cups-devel
 BuildRequires:	fontconfig-devel
+# geoclue-interface.xml is required
+BuildRequires:	geoclue2 >= 2.0.0
+BuildRequires:	geoclue2-devel >= 2.0.0
+BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.35.4
-BuildRequires:	gnome-desktop-devel >= 3.7.90
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.7.2.1
-BuildRequires:	gtk+3-devel >= 3.7.8
+BuildRequires:	glib2-devel >= 1:2.38.0
+BuildRequires:	gnome-desktop-devel >= 3.10.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.10.0
+BuildRequires:	gtk+3-devel >= 3.8.0
 %{?with_ibus:BuildRequires:	ibus-devel >= 1.4.99}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
+BuildRequires:	libgweather-devel >= 3.10.0
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	librsvg-devel >= 2.36.2
 BuildRequires:	libtool
 BuildRequires:	libwacom-devel >= 0.7
 BuildRequires:	nss-devel >= 3.11.2
 BuildRequires:	pkgconfig
+BuildRequires:	polkit-devel >= 0.103
 BuildRequires:	pulseaudio-devel >= 2.0
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
@@ -51,10 +57,13 @@ BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.35.3
-Requires:	gnome-desktop >= 3.7.90
-Requires:	gsettings-desktop-schemas >= 3.7.2.1
-Requires:	gtk+3 >= 3.7.8
+Requires(post,postun):	glib2 >= 1:2.38.0
+Requires:	colord >= 0.1.12
+Requires:	geoclue2 >= 2.0.0
+Requires:	geocode-glib >= 3.10.0
+Requires:	gnome-desktop >= 3.10.0
+Requires:	gsettings-desktop-schemas >= 3.10.0
+Requires:	gtk+3 >= 3.8.0
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 # sr@Latn vs. sr@latin
@@ -73,7 +82,7 @@ Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
-Requires:	glib2-devel >= 1:2.35.3
+Requires:	glib2-devel >= 1:2.38.0
 # doesn't require base currently
 
 %description devel
@@ -141,12 +150,14 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-printer
 %attr(755,root,root) %{_libexecdir}/gsd-test-screensaver-proxy
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
+%attr(755,root,root) %{_libexecdir}/gsd-wacom-oled-helper
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-settings.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libclipboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcolor.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcursor.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libdatetime.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsd.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsdwacom.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libhousekeeping.so
@@ -157,7 +168,9 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libpower.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libremote-display.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/librfkill.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libscreensaver-proxy.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxsettings.so
@@ -166,6 +179,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/clipboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/color.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/cursor.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/datetime.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/housekeeping.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/keyboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/media-keys.gnome-settings-plugin
@@ -174,7 +188,9 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/power.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/remote-display.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/rfkill.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/screensaver-proxy.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
@@ -198,6 +214,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-settings
 %attr(755,root,root) %{_libexecdir}/gsd-test-cursor
+%attr(755,root,root) %{_libexecdir}/gsd-test-datetime
 %attr(755,root,root) %{_libexecdir}/gsd-test-housekeeping
 %attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
 %attr(755,root,root) %{_libexecdir}/gsd-test-keyboard
@@ -206,7 +223,10 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-test-orientation
 %attr(755,root,root) %{_libexecdir}/gsd-test-print-notifications
 %attr(755,root,root) %{_libexecdir}/gsd-test-remote-display
+%attr(755,root,root) %{_libexecdir}/gsd-test-rfkill
+%attr(755,root,root) %{_libexecdir}/gsd-test-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-test-sound
+%attr(755,root,root) %{_libexecdir}/gsd-test-updates
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom-osd
 %attr(755,root,root) %{_libexecdir}/gsd-test-xrandr
