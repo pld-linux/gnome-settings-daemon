@@ -2,8 +2,8 @@
 # - (gnome-settings-daemon:8918): updates-plugin-WARNING **: failed to open directory: Error opening directory '/run/udev/firmware-missing': Permission denied
 #
 # Conditiional build:
-%bcond_without	ibus		# ibus support need no yet released ibus 1.5 or at least devel 1.4.99 version
-%bcond_without	packagekit	# packagekit 0.8.x doesn not supports poldek yet
+%bcond_without	ibus		# ibus support
+%bcond_without	packagekit	# PackageKit support
 #
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
@@ -19,12 +19,10 @@ URL:		http://www.gnome.org/
 %{?with_packagekit:BuildRequires:	PackageKit-devel >= 0.8.0}
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
-BuildRequires:	colord-devel >= 0.1.12
-BuildRequires:	cups-devel
+BuildRequires:	colord-devel >= 1.0.2
+BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
-# geoclue-interface.xml is required
-BuildRequires:	geoclue2 >= 2.0.0
-BuildRequires:	geoclue2-devel >= 2.0.0
+BuildRequires:	geoclue2-devel >= 2.0.0-2
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.38.0
@@ -39,8 +37,10 @@ BuildRequires:	libgweather-devel >= 3.10.0
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	librsvg-devel >= 2.36.2
 BuildRequires:	libtool
+BuildRequires:	libxslt-progs
 BuildRequires:	libwacom-devel >= 0.7
 BuildRequires:	nss-devel >= 3.11.2
+BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.103
 BuildRequires:	pulseaudio-devel >= 2.0
@@ -52,13 +52,16 @@ BuildRequires:	upower-devel >= 0.9.11
 BuildRequires:	xorg-driver-input-wacom-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
+BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.38.0
-Requires:	colord >= 0.1.12
+Requires:	colord >= 1.0.2
+Requires:	cups-lib >= 1.4
 Requires:	geoclue2 >= 2.0.0
 Requires:	geocode-glib >= 3.10.0
 Requires:	gnome-desktop >= 3.10.0
@@ -66,6 +69,16 @@ Requires:	gsettings-desktop-schemas >= 3.10.0
 Requires:	gtk+3 >= 3.8.0
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
+%{?with_ibus:Requires:	ibus-libs >= 1.4.99}
+Requires:	lcms2 >= 2.2
+Requires:	libgweather >= 3.10.0
+Requires:	libnotify >= 0.7.3
+Requires:	librsvg >= 2.36.2
+Requires:	libwacom >= 0.7
+Requires:	pango >= 1:1.20.0
+Requires:	polkit-libs >= 0.103
+Requires:	pulseaudio-libs >= 2.0
+Requires:	upower-libs >= 0.9.11
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 Conflicts:	gnome-color-manager < 3.1.92-1
@@ -83,6 +96,20 @@ Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNO
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
 Requires:	glib2-devel >= 1:2.38.0
+# for gsd-list-*, gsd-test-* tools:
+Requires:	cups-lib >= 1.4
+Requires:	geocode-glib >= 3.10.0
+Requires:	gnome-desktop >= 3.10.0
+Requires:	gtk+3 >= 3.8.0
+%{?with_ibus:Requires:	ibus-libs >= 1.4.99}
+Requires:	libgweather >= 3.10.0
+Requires:	libnotify >= 0.7.3
+Requires:	librsvg >= 2.36.2
+Requires:	libwacom >= 0.7
+Requires:	pango >= 1:1.20.0
+Requires:	polkit-libs >= 0.103
+Requires:	pulseaudio-libs >= 2.0
+Requires:	upower-libs >= 0.9.11
 # doesn't require base currently
 
 %description devel
@@ -93,11 +120,15 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 
 %package updates
 Summary:	Updates plugin for GNOME Settings Daemon
+Summary(pl.UTF-8):	Wtyczka uaktualnień dla demona ustawień GNOME
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description updates
 Updates plugin for GNOME Settings Daemon.
+
+%description updates -l pl.UTF-8
+Wtyczka uaktualnień dla demona ustawień GNOME.
 
 %prep
 %setup -q
@@ -111,9 +142,10 @@ Updates plugin for GNOME Settings Daemon.
 %{__autoconf}
 %{__automake}
 %configure \
-	%{__enable_disable packagekit packagekit} \
 	%{__enable_disable ibus ibus} \
-	--disable-silent-rules
+	%{__enable_disable packagekit packagekit} \
+	--disable-silent-rules \
+	--disable-static
 %{__make}
 
 %install
@@ -123,7 +155,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/*.{a,la}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/*.la
 
 %find_lang %{name}
 
