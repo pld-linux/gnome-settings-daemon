@@ -96,20 +96,6 @@ Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNO
 Group:		Development/Libraries
 Requires:	dbus-devel >= 1.2.0
 Requires:	glib2-devel >= 1:2.38.0
-# for gsd-list-*, gsd-test-* tools:
-Requires:	cups-lib >= 1.4
-Requires:	geocode-glib >= 3.10.0
-Requires:	gnome-desktop >= 3.10.0
-Requires:	gtk+3 >= 3.8.0
-%{?with_ibus:Requires:	ibus-libs >= 1.4.99}
-Requires:	libgweather >= 3.10.0
-Requires:	libnotify >= 0.7.3
-Requires:	librsvg >= 2.36.2
-Requires:	libwacom >= 0.7
-Requires:	pango >= 1:1.20.0
-Requires:	polkit-libs >= 0.103
-Requires:	pulseaudio-libs >= 2.0
-Requires:	upower-libs >= 0.9.11
 # doesn't require base currently
 
 %description devel
@@ -117,6 +103,18 @@ Header file for developing GNOME Settings Daemon clients.
 
 %description devel -l pl.UTF-8
 Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
+
+%package test
+Summary:	Test plugins for GNOME Settings Daemon
+Summary(pl.UTF-8):	Wtyczki testowe dla demona ustawień GNOME
+Group:		Libraries
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description test
+Test plugins for GNOME Settings Daemon.
+
+%description test -l pl.UTF-8
+Wtyczki testowe dla demona ustawień GNOME.
 
 %package updates
 Summary:	Updates plugin for GNOME Settings Daemon
@@ -230,17 +228,22 @@ fi
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/dbus-1/services/org.freedesktop.IBus.service
-%{_datadir}/glib-2.0/schemas/*.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/gnome-settings-daemon-3.0
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
-%{_iconsdir}/hicolor/*/*/*.png
-%{_iconsdir}/hicolor/*/*/*.svg
+%{_iconsdir}/hicolor/*x*/apps/gsd-xrandr.png
+%{_iconsdir}/hicolor/scalable/apps/gsd-xrandr.svg
 %{_mandir}/man1/gnome-settings-daemon.1*
 %{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
 
 %files devel
+%defattr(644,root,root,755)
+%{_includedir}/gnome-settings-daemon-3.0
+%{_pkgconfigdir}/gnome-settings-daemon.pc
+
+%files test
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libexecdir}/gsd-list-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-keyboard
@@ -263,8 +266,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom-osd
 %attr(755,root,root) %{_libexecdir}/gsd-test-xrandr
 %attr(755,root,root) %{_libexecdir}/gsd-test-xsettings
-%{_includedir}/gnome-settings-daemon-3.0
-%{_pkgconfigdir}/gnome-settings-daemon.pc
 
 %if %{with packagekit}
 %files updates
