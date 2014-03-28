@@ -8,13 +8,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.10.2
+Version:	3.12.0.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	b8afefcf332cde38ef04621a73bcd042
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.12/%{name}-%{version}.tar.xz
+# Source0-md5:	c75d196b58bb4bb1ec0f5f9096430779
 URL:		http://www.gnome.org/
 %{?with_packagekit:BuildRequires:	PackageKit-devel >= 0.8.1}
 BuildRequires:	autoconf >= 2.60
@@ -22,11 +22,11 @@ BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= 1.0.2
 BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
-BuildRequires:	geoclue2-devel >= 2.0.0-2
+BuildRequires:	geoclue2-devel >= 2.1.2
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.38.0
-BuildRequires:	gnome-desktop-devel >= 3.10.0
+BuildRequires:	gnome-desktop-devel >= 3.12.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.10.0
 BuildRequires:	gtk+3-devel >= 3.8.0
 %{?with_ibus:BuildRequires:	ibus-devel >= 1.4.99}
@@ -48,7 +48,7 @@ BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
-BuildRequires:	upower-devel >= 0.9.11
+BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	xorg-driver-input-wacom-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -62,9 +62,9 @@ BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.38.0
 Requires:	colord >= 1.0.2
 Requires:	cups-lib >= 1.4
-Requires:	geoclue2 >= 2.0.0
+Requires:	geoclue2 >= 2.1.2
 Requires:	geocode-glib >= 3.10.0
-Requires:	gnome-desktop >= 3.10.0
+Requires:	gnome-desktop >= 3.12.0
 Requires:	gsettings-desktop-schemas >= 3.10.0
 Requires:	gtk+3 >= 3.8.0
 Requires:	gtk-update-icon-cache
@@ -78,7 +78,7 @@ Requires:	libwacom >= 0.7
 Requires:	pango >= 1:1.20.0
 Requires:	polkit-libs >= 0.103
 Requires:	pulseaudio-libs >= 2.0
-Requires:	upower-libs >= 0.9.11
+Requires:	upower-libs >= 0.99.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 Conflicts:	gnome-color-manager < 3.1.92-1
@@ -151,7 +151,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	udevrulesdir=/lib/udev/rules.d
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/*.la
 
@@ -197,7 +198,6 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liborientation.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libpower.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libremote-display.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/librfkill.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libscreensaver-proxy.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
@@ -217,7 +217,6 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/orientation.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/power.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/remote-display.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/rfkill.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/screensaver-proxy.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
@@ -226,6 +225,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
+/lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/dbus-1/services/org.freedesktop.IBus.service
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -257,7 +257,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-test-mouse
 %attr(755,root,root) %{_libexecdir}/gsd-test-orientation
 %attr(755,root,root) %{_libexecdir}/gsd-test-print-notifications
-%attr(755,root,root) %{_libexecdir}/gsd-test-remote-display
 %attr(755,root,root) %{_libexecdir}/gsd-test-rfkill
 %attr(755,root,root) %{_libexecdir}/gsd-test-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-test-sound
