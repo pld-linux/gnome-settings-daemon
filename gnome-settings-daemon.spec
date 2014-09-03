@@ -9,7 +9,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	3.12.2
-Release:	3
+Release:	4
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
