@@ -1,22 +1,15 @@
-# TODO
-# - (gnome-settings-daemon:8918): updates-plugin-WARNING **: failed to open directory: Error opening directory '/run/udev/firmware-missing': Permission denied
-#
-# Conditiional build:
-%bcond_without	ibus		# ibus support
-%bcond_without	packagekit	# PackageKit support
-#
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.12.2
-Release:	4
+Version:	3.14.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.12/%{name}-%{version}.tar.xz
-# Source0-md5:	63b053c499e73e522b316c54224b22dc
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.14/%{name}-%{version}.tar.xz
+# Source0-md5:	12e84a4fcc315d3bd6d3d373828fe0c2
 URL:		http://www.gnome.org/
-%{?with_packagekit:BuildRequires:	PackageKit-devel >= 0.8.1}
+BuildRequires:	NetworkManager-devel >= 0.9.9.1
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= 1.0.2
@@ -29,7 +22,6 @@ BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gnome-desktop-devel >= 3.12.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.10.0
 BuildRequires:	gtk+3-devel >= 3.8.0
-%{?with_ibus:BuildRequires:	ibus-devel >= 1.4.99}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -69,7 +61,6 @@ Requires:	gsettings-desktop-schemas >= 3.10.0
 Requires:	gtk+3 >= 3.8.0
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
-%{?with_ibus:Requires:	ibus-libs >= 1.4.99}
 Requires:	lcms2 >= 2.2
 Requires:	libgweather >= 3.10.0
 Requires:	libnotify >= 0.7.3
@@ -82,6 +73,7 @@ Requires:	upower-libs >= 0.99.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 Conflicts:	gnome-color-manager < 3.1.92-1
+Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -140,8 +132,6 @@ Wtyczka uaktualnień dla demona ustawień GNOME.
 %{__autoconf}
 %{__automake}
 %configure \
-	%{__enable_disable ibus ibus} \
-	%{__enable_disable packagekit packagekit} \
 	--disable-silent-rules \
 	--disable-static
 %{__make}
@@ -200,6 +190,7 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/librfkill.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libscreensaver-proxy.so
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsharing.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
@@ -219,6 +210,7 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/rfkill.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/screensaver-proxy.gnome-settings-plugin
+%{_libdir}/gnome-settings-daemon-3.0/sharing.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
@@ -227,7 +219,6 @@ fi
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
-%{_datadir}/dbus-1/services/org.freedesktop.IBus.service
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/gnome-settings-daemon-3.0
@@ -260,15 +251,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-test-rfkill
 %attr(755,root,root) %{_libexecdir}/gsd-test-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-test-sound
-%attr(755,root,root) %{_libexecdir}/gsd-test-updates
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom-osd
 %attr(755,root,root) %{_libexecdir}/gsd-test-xrandr
 %attr(755,root,root) %{_libexecdir}/gsd-test-xsettings
-
-%if %{with packagekit}
-%files updates
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libupdates.so
-%{_libdir}/gnome-settings-daemon-3.0/updates.gnome-settings-plugin
-%endif
