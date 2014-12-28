@@ -17,7 +17,7 @@ BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
 BuildRequires:	geoclue2-devel >= 2.1.2
 BuildRequires:	geocode-glib-devel >= 3.10.0
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gnome-desktop-devel >= 3.12.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.10.0
