@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.14.2
-Release:	2
+Version:	3.16.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.14/%{name}-%{version}.tar.xz
-# Source0-md5:	acf6690c1fef93aff552e53501bd3959
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.16/%{name}-%{version}.tar.xz
+# Source0-md5:	47f16cce1b8dea68455ad9fd9645692f
 URL:		http://www.gnome.org/
 BuildRequires:	NetworkManager-devel >= 0.9.9.1
 BuildRequires:	autoconf >= 2.60
@@ -20,8 +20,8 @@ BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gnome-desktop-devel >= 3.12.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.10.0
-BuildRequires:	gtk+3-devel >= 3.8.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.15.4
+BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -29,8 +29,8 @@ BuildRequires:	libgweather-devel >= 3.10.0
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	librsvg-devel >= 2.36.2
 BuildRequires:	libtool
-BuildRequires:	libxslt-progs
 BuildRequires:	libwacom-devel >= 0.7
+BuildRequires:	libxslt-progs
 BuildRequires:	nss-devel >= 3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
@@ -44,7 +44,6 @@ BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	xorg-driver-input-wacom-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
-BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libXxf86misc-devel
@@ -57,8 +56,8 @@ Requires:	cups-lib >= 1.4
 Requires:	geoclue2 >= 2.1.2
 Requires:	geocode-glib >= 3.10.0
 Requires:	gnome-desktop >= 3.12.0
-Requires:	gsettings-desktop-schemas >= 3.10.0
-Requires:	gtk+3 >= 3.8.0
+Requires:	gsettings-desktop-schemas >= 3.15.4
+Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Requires:	lcms2 >= 2.2
@@ -71,9 +70,9 @@ Requires:	polkit-libs >= 0.103
 Requires:	pulseaudio-libs >= 2.0
 Requires:	upower-libs >= 0.99.0
 # sr@Latn vs. sr@latin
+Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
 Conflicts:	glibc-misc < 6:2.7
 Conflicts:	gnome-color-manager < 3.1.92-1
-Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -177,7 +176,6 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-settings.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libclipboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcolor.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcursor.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libdatetime.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsd.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsdwacom.so
@@ -199,7 +197,6 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/a11y-settings.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/clipboard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/color.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/cursor.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/datetime.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/housekeeping.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/keyboard.gnome-settings-plugin
@@ -239,7 +236,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-list-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-settings
-%attr(755,root,root) %{_libexecdir}/gsd-test-cursor
 %attr(755,root,root) %{_libexecdir}/gsd-test-datetime
 %attr(755,root,root) %{_libexecdir}/gsd-test-housekeeping
 %attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
