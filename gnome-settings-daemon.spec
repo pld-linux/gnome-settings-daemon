@@ -41,6 +41,8 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.99.0
+# wayland-client
+BuildRequires:	wayland-devel
 BuildRequires:	xorg-driver-input-wacom-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
