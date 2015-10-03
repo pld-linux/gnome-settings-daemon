@@ -29,9 +29,11 @@ BuildRequires:	libgweather-devel >= 3.10.0
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	librsvg-devel >= 2.36.2
 BuildRequires:	libtool
+%ifnarch s390 s390x
 BuildRequires:	libwacom-devel >= 0.7
+%endif
 BuildRequires:	libxslt-progs
-BuildRequires:	nss-devel >= 3.11.2
+BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.103
@@ -43,7 +45,9 @@ BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.99.0
 # wayland-client
 BuildRequires:	wayland-devel
+%ifnarch s390 s390x
 BuildRequires:	xorg-driver-input-wacom-devel
+%endif
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXi-devel
@@ -66,7 +70,10 @@ Requires:	lcms2 >= 2.2
 Requires:	libgweather >= 3.10.0
 Requires:	libnotify >= 0.7.3
 Requires:	librsvg >= 2.36.2
+%ifnarch s390 s390x
 Requires:	libwacom >= 0.7
+%endif
+Requires:	nss >= 1:3.11.2
 Requires:	pango >= 1:1.20.0
 Requires:	polkit-libs >= 0.103
 Requires:	pulseaudio-libs >= 2.0
@@ -87,7 +94,6 @@ Demon ustawień GNOME.
 Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
-Requires:	dbus-devel >= 1.2.0
 Requires:	glib2-devel >= 1:2.38.0
 # doesn't require base currently
 
@@ -171,8 +177,10 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-printer
 %attr(755,root,root) %{_libexecdir}/gsd-test-screensaver-proxy
+%ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-oled-helper
+%endif
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-settings.so
@@ -180,7 +188,9 @@ fi
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcolor.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libdatetime.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsd.so
+%ifnarch s390 s390x
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsdwacom.so
+%endif
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libhousekeeping.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libkeyboard.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libmedia-keys.so
@@ -212,7 +222,9 @@ fi
 %{_libdir}/gnome-settings-daemon-3.0/sharing.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
+%ifnarch s390 s390x
 %{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
+%endif
 %{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
 %{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
@@ -222,7 +234,9 @@ fi
 %{_datadir}/gnome-settings-daemon
 %{_datadir}/gnome-settings-daemon-3.0
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
+%ifnarch s390 s390x
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
+%endif
 %{_iconsdir}/hicolor/*x*/apps/gsd-xrandr.png
 %{_iconsdir}/hicolor/scalable/apps/gsd-xrandr.svg
 %{_mandir}/man1/gnome-settings-daemon.1*
@@ -235,7 +249,9 @@ fi
 
 %files test
 %defattr(644,root,root,755)
+%ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-list-wacom
+%endif
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-test-a11y-settings
 %attr(755,root,root) %{_libexecdir}/gsd-test-datetime
@@ -249,7 +265,9 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-test-rfkill
 %attr(755,root,root) %{_libexecdir}/gsd-test-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-test-sound
+%ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-test-wacom-osd
+%endif
 %attr(755,root,root) %{_libexecdir}/gsd-test-xrandr
 %attr(755,root,root) %{_libexecdir}/gsd-test-xsettings
