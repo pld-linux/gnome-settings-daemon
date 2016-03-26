@@ -1,26 +1,27 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.18.2
+Version:	3.20.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.18/%{name}-%{version}.tar.xz
-# Source0-md5:	abee6001b1251bcf3f7658f5f2b5cb9d
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.20/%{name}-%{version}.tar.xz
+# Source0-md5:	4bb14c7de16a7ab58878dd124c85e46d
 URL:		http://www.gnome.org/
-BuildRequires:	NetworkManager-devel >= 0.9.9.1
+BuildRequires:	NetworkManager-devel >= 1.0
+BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= 1.0.2
 BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
-BuildRequires:	geoclue2-devel >= 2.1.2
+BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gnome-desktop-devel >= 3.12.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.15.4
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.20.0
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
@@ -59,10 +60,10 @@ BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.38.0
 Requires:	colord >= 1.0.2
 Requires:	cups-lib >= 1.4
-Requires:	geoclue2 >= 2.1.2
+Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	gnome-desktop >= 3.12.0
-Requires:	gsettings-desktop-schemas >= 3.15.4
+Requires:	gsettings-desktop-schemas >= 3.20.0
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -232,7 +233,6 @@ fi
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
 %{_datadir}/gnome-settings-daemon
-%{_datadir}/gnome-settings-daemon-3.0
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %ifnarch s390 s390x
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
