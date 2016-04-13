@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.20.0
+Version:	3.20.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.20/%{name}-%{version}.tar.xz
-# Source0-md5:	4bb14c7de16a7ab58878dd124c85e46d
+# Source0-md5:	9ce5cd7bf4f3060de563c5e3d0247294
 URL:		http://www.gnome.org/
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
