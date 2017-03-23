@@ -1,17 +1,17 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.22.2
+Version:	3.24.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.22/%{name}-%{version}.tar.xz
-# Source0-md5:	80a565c28d487afad992d2b627706417
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.24/%{name}-%{version}.tar.xz
+# Source0-md5:	c6a5a9d6dff3222299fcca7f839557fa
 URL:		http://www.gnome.org/
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
-BuildRequires:	autoconf >= 2.60
+BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= 1.0.2
 BuildRequires:	cups-devel >= 1.4
@@ -19,9 +19,9 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.38.0
+BuildRequires:	glib2-devel >= 1:2.44.0
 BuildRequires:	gnome-desktop-devel >= 3.12.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.20.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.24.0
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
@@ -57,13 +57,13 @@ BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.38.0
+Requires(post,postun):	glib2 >= 1:2.44.0
 Requires:	colord >= 1.0.2
 Requires:	cups-lib >= 1.4
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	gnome-desktop >= 3.12.0
-Requires:	gsettings-desktop-schemas >= 3.20.0
+Requires:	gsettings-desktop-schemas >= 3.24.0
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -80,6 +80,7 @@ Requires:	polkit-libs >= 0.103
 Requires:	pulseaudio-libs >= 2.0
 Requires:	upower-libs >= 0.99.0
 # sr@Latn vs. sr@latin
+Obsoletes:	gnome-settings-daemon-test < 1:3.24.0
 Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
 Conflicts:	glibc-misc < 6:2.7
 Conflicts:	gnome-color-manager < 3.1.92-1
@@ -95,7 +96,7 @@ Demon ustawień GNOME.
 Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
-Requires:	glib2-devel >= 1:2.38.0
+Requires:	glib2-devel >= 1:2.44.0
 # doesn't require base currently
 
 %description devel
@@ -103,30 +104,6 @@ Header file for developing GNOME Settings Daemon clients.
 
 %description devel -l pl.UTF-8
 Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
-
-%package test
-Summary:	Test plugins for GNOME Settings Daemon
-Summary(pl.UTF-8):	Wtyczki testowe dla demona ustawień GNOME
-Group:		Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description test
-Test plugins for GNOME Settings Daemon.
-
-%description test -l pl.UTF-8
-Wtyczki testowe dla demona ustawień GNOME.
-
-%package updates
-Summary:	Updates plugin for GNOME Settings Daemon
-Summary(pl.UTF-8):	Wtyczka uaktualnień dla demona ustawień GNOME
-Group:		Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description updates
-Updates plugin for GNOME Settings Daemon.
-
-%description updates -l pl.UTF-8
-Wtyczka uaktualnień dla demona ustawień GNOME.
 
 %prep
 %setup -q
@@ -172,62 +149,37 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
-%attr(755,root,root) %{_libexecdir}/gnome-settings-daemon
-%attr(755,root,root) %{_libexecdir}/gnome-settings-daemon-localeexec
+%attr(755,root,root) %{_libexecdir}/gsd-a11y-keyboard
+%attr(755,root,root) %{_libexecdir}/gsd-a11y-settings
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
+%attr(755,root,root) %{_libexecdir}/gsd-clipboard
+%attr(755,root,root) %{_libexecdir}/gsd-color
+%attr(755,root,root) %{_libexecdir}/gsd-datetime
+%attr(755,root,root) %{_libexecdir}/gsd-dummy
+%attr(755,root,root) %{_libexecdir}/gsd-housekeeping
+%attr(755,root,root) %{_libexecdir}/gsd-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
+%attr(755,root,root) %{_libexecdir}/gsd-media-keys
+%attr(755,root,root) %{_libexecdir}/gsd-mouse
+%attr(755,root,root) %{_libexecdir}/gsd-orientation
+%attr(755,root,root) %{_libexecdir}/gsd-power
+%attr(755,root,root) %{_libexecdir}/gsd-print-notifications
 %attr(755,root,root) %{_libexecdir}/gsd-printer
-%attr(755,root,root) %{_libexecdir}/gsd-test-screensaver-proxy
+%attr(755,root,root) %{_libexecdir}/gsd-rfkill
+%attr(755,root,root) %{_libexecdir}/gsd-screensaver-proxy
+%attr(755,root,root) %{_libexecdir}/gsd-sharing
+%attr(755,root,root) %{_libexecdir}/gsd-smartcard
+%attr(755,root,root) %{_libexecdir}/gsd-sound
+%attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
+%attr(755,root,root) %{_libexecdir}/gsd-wacom
+%attr(755,root,root) %{_libexecdir}/gsd-xrandr
+%attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-oled-helper
 %endif
 %dir %{_libdir}/gnome-settings-daemon-3.0
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-keyboard.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liba11y-settings.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libclipboard.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libcolor.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libdatetime.so
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsd.so
-%ifnarch s390 s390x
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsdwacom.so
-%endif
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libhousekeeping.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libkeyboard.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libmedia-keys.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libmouse.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/liborientation.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libpower.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libprint-notifications.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/librfkill.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libscreensaver-proxy.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsharing.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsmartcard.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libsound.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxrandr.so
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libxsettings.so
-%{_libdir}/gnome-settings-daemon-3.0/a11y-keyboard.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/a11y-settings.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/clipboard.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/color.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/datetime.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/housekeeping.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/keyboard.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/media-keys.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/mouse.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/orientation.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/power.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/print-notifications.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/rfkill.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/screensaver-proxy.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/sharing.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/smartcard.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/sound.gnome-settings-plugin
-%ifnarch s390 s390x
-%{_libdir}/gnome-settings-daemon-3.0/wacom.gnome-settings-plugin
-%endif
-%{_libdir}/gnome-settings-daemon-3.0/xrandr.gnome-settings-plugin
-%{_libdir}/gnome-settings-daemon-3.0/xsettings.gnome-settings-plugin
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
@@ -239,35 +191,30 @@ fi
 %endif
 %{_iconsdir}/hicolor/*x*/apps/gsd-xrandr.png
 %{_iconsdir}/hicolor/scalable/apps/gsd-xrandr.svg
-%{_mandir}/man1/gnome-settings-daemon.1*
-%{_sysconfdir}/xdg/autostart/gnome-settings-daemon.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11yKeyboard.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11ySettings.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Clipboard.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Color.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Datetime.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Housekeeping.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Keyboard.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.MediaKeys.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Mouse.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Orientation.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Power.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.PrintNotifications.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Rfkill.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.ScreensaverProxy.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sharing.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Smartcard.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sound.desktop
+%ifnarch s390 s390x
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Wacom.desktop
+%endif
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.XRANDR.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.XSettings.desktop
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/gnome-settings-daemon-3.0
 %{_pkgconfigdir}/gnome-settings-daemon.pc
-
-%files test
-%defattr(644,root,root,755)
-%ifnarch s390 s390x
-%attr(755,root,root) %{_libexecdir}/gsd-list-wacom
-%endif
-%attr(755,root,root) %{_libexecdir}/gsd-test-a11y-keyboard
-%attr(755,root,root) %{_libexecdir}/gsd-test-a11y-settings
-%attr(755,root,root) %{_libexecdir}/gsd-test-datetime
-%attr(755,root,root) %{_libexecdir}/gsd-test-housekeeping
-%attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
-%attr(755,root,root) %{_libexecdir}/gsd-test-keyboard
-%attr(755,root,root) %{_libexecdir}/gsd-test-media-keys
-%attr(755,root,root) %{_libexecdir}/gsd-test-mouse
-%attr(755,root,root) %{_libexecdir}/gsd-test-orientation
-%attr(755,root,root) %{_libexecdir}/gsd-test-print-notifications
-%attr(755,root,root) %{_libexecdir}/gsd-test-rfkill
-%attr(755,root,root) %{_libexecdir}/gsd-test-smartcard
-%attr(755,root,root) %{_libexecdir}/gsd-test-sound
-%ifnarch s390 s390x
-%attr(755,root,root) %{_libexecdir}/gsd-test-wacom
-%attr(755,root,root) %{_libexecdir}/gsd-test-wacom-osd
-%endif
-%attr(755,root,root) %{_libexecdir}/gsd-test-xrandr
-%attr(755,root,root) %{_libexecdir}/gsd-test-xsettings
