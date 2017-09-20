@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.24.3
+Version:	3.26.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.24/%{name}-%{version}.tar.xz
-# Source0-md5:	a40a634805d444a7d851aba4a897120f
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.26/%{name}-%{version}.tar.xz
+# Source0-md5:	5ced8f170c91273b663b8e3ae8716557
 URL:		http://www.gnome.org/
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
@@ -19,7 +19,7 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.44.0
+BuildRequires:	glib2-devel >= 1:2.54.0
 BuildRequires:	gnome-desktop-devel >= 3.12.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.24.0
 BuildRequires:	gtk+3-devel >= 3.15.3
@@ -57,7 +57,7 @@ BuildRequires:	xorg-lib-libXxf86misc-devel
 BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.44.0
+Requires(post,postun):	glib2 >= 1:2.54.0
 Requires:	colord >= 1.0.2
 Requires:	cups-lib >= 1.4
 Requires:	geoclue2 >= 2.3.1
@@ -96,7 +96,7 @@ Demon ustawień GNOME.
 Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
-Requires:	glib2-devel >= 1:2.44.0
+Requires:	glib2-devel >= 1:2.54.0
 # doesn't require base currently
 
 %description devel
@@ -137,11 +137,9 @@ install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%update_icon_cache hicolor
 %glib_compile_schemas
 
 %postun
-%update_icon_cache hicolor
 if [ "$1" = "0" ]; then
 	%glib_compile_schemas
 fi
@@ -161,7 +159,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-media-keys
 %attr(755,root,root) %{_libexecdir}/gsd-mouse
-%attr(755,root,root) %{_libexecdir}/gsd-orientation
 %attr(755,root,root) %{_libexecdir}/gsd-power
 %attr(755,root,root) %{_libexecdir}/gsd-print-notifications
 %attr(755,root,root) %{_libexecdir}/gsd-printer
@@ -172,7 +169,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-sound
 %attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
 %attr(755,root,root) %{_libexecdir}/gsd-wacom
-%attr(755,root,root) %{_libexecdir}/gsd-xrandr
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
@@ -189,8 +185,6 @@ fi
 %ifnarch s390 s390x
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %endif
-%{_iconsdir}/hicolor/*x*/apps/gsd-xrandr.png
-%{_iconsdir}/hicolor/scalable/apps/gsd-xrandr.svg
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11yKeyboard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11ySettings.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Clipboard.desktop
@@ -200,7 +194,6 @@ fi
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Keyboard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.MediaKeys.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Mouse.desktop
-%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Orientation.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Power.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.PrintNotifications.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Rfkill.desktop
@@ -211,7 +204,6 @@ fi
 %ifnarch s390 s390x
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Wacom.desktop
 %endif
-%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.XRANDR.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.XSettings.desktop
 
 %files devel
