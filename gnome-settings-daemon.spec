@@ -1,18 +1,16 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.26.2
+Version:	3.28.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.26/%{name}-%{version}.tar.xz
-# Source0-md5:	77f335b7330573595e6349095c8d3630
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.28/%{name}-%{version}.tar.xz
+# Source0-md5:	508f36ade9b97afebd32a3437b1a4c56
 URL:		http://www.gnome.org/
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
-BuildRequires:	autoconf >= 2.69
-BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= 1.0.2
 BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
@@ -23,21 +21,20 @@ BuildRequires:	glib2-devel >= 1:2.54.0
 BuildRequires:	gnome-desktop-devel >= 3.12.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.24.0
 BuildRequires:	gtk+3-devel >= 3.15.3
-BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
 BuildRequires:	libgweather-devel >= 3.10.0
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	librsvg-devel >= 2.36.2
-BuildRequires:	libtool
 %ifnarch s390 s390x
 BuildRequires:	libwacom-devel >= 0.7
 %endif
 BuildRequires:	libxslt-progs
+BuildRequires:	meson >= 0.44.0
 BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
-BuildRequires:	polkit-devel >= 0.103
+BuildRequires:	polkit-devel >= 0.113-4
 BuildRequires:	pulseaudio-devel >= 2.0
 BuildRequires:	rpmbuild(macros) >= 1.593
 BuildRequires:	sed >= 4.0
@@ -109,27 +106,14 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %setup -q
 
 %build
-%{__glib_gettextize}
-%{__intltoolize}
-%{__libtoolize}
-%{__aclocal}
-%{__autoheader}
-%{__autoconf}
-%{__automake}
-%configure \
-	--disable-silent-rules \
-	--disable-static
-%{__make}
+%meson build
+%meson_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	udevrulesdir=/lib/udev/rules.d
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/*.la
+%meson_install -C build
 
 %find_lang %{name}
 
@@ -147,7 +131,6 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
-%attr(755,root,root) %{_libexecdir}/gsd-a11y-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-a11y-settings
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
 %attr(755,root,root) %{_libexecdir}/gsd-clipboard
@@ -185,7 +168,6 @@ fi
 %ifnarch s390 s390x
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %endif
-%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11yKeyboard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11ySettings.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Clipboard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Color.desktop
