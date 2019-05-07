@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.30.2
+Version:	3.32.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.30/%{name}-%{version}.tar.xz
-# Source0-md5:	ac4cf0cf54d60c839698cad6560367ff
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.32/%{name}-%{version}.tar.xz
+# Source0-md5:	d1f55fb2059a2c52b1ce9af71f949961
 URL:		http://www.gnome.org/
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
@@ -17,9 +17,9 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.54.0
+BuildRequires:	glib2-devel >= 1:2.56
 BuildRequires:	gnome-desktop-devel >= 3.12.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.24.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.28
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -31,6 +31,7 @@ BuildRequires:	libwacom-devel >= 0.7
 %endif
 BuildRequires:	libxslt-progs
 BuildRequires:	meson >= 0.44.0
+BuildRequires:	ninja >= 1.5
 BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
@@ -49,18 +50,16 @@ BuildRequires:	xorg-driver-input-wacom-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXi-devel
-BuildRequires:	xorg-lib-libXtst-devel
-BuildRequires:	xorg-lib-libXxf86misc-devel
-BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.54.0
+Requires(post,postun):	glib2 >= 1:2.56
 Requires:	colord >= 1.0.2
 Requires:	cups-lib >= 1.4
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
+Requires:	glib2 >= 1:2.56
 Requires:	gnome-desktop >= 3.12.0
-Requires:	gsettings-desktop-schemas >= 3.24.0
+Requires:	gsettings-desktop-schemas >= 3.28
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -93,7 +92,7 @@ Demon ustawień GNOME.
 Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
-Requires:	glib2-devel >= 1:2.54.0
+Requires:	glib2-devel >= 1:2.56
 # doesn't require base currently
 
 %description devel
@@ -107,6 +106,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 
 %build
 %meson build
+
 %meson_build -C build
 
 %install
@@ -150,7 +150,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-sharing
 %attr(755,root,root) %{_libexecdir}/gsd-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-sound
-%attr(755,root,root) %{_libexecdir}/gsd-test-input-helper
 %attr(755,root,root) %{_libexecdir}/gsd-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %ifnarch s390 s390x
