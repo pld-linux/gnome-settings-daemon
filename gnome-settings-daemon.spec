@@ -1,25 +1,27 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.32.1
+Version:	3.34.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.32/%{name}-%{version}.tar.xz
-# Source0-md5:	603643a0f2c2188f364504909aca08c6
-URL:		http://www.gnome.org/
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.34/%{name}-%{version}.tar.xz
+# Source0-md5:	528b0b7cc2dd22c6026a9c8739c71fa7
+URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
+BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
-BuildRequires:	colord-devel >= 1.0.2
+BuildRequires:	colord-devel >= 1.3.5
 BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
+BuildRequires:	gcr-devel >= 3.7.5
 BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.56
 BuildRequires:	gnome-desktop-devel >= 3.12.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.28
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.33.0
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -35,13 +37,13 @@ BuildRequires:	ninja >= 1.5
 BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
-BuildRequires:	polkit-devel >= 0.113-4
+BuildRequires:	polkit-devel >= 0.114
 BuildRequires:	pulseaudio-devel >= 2.0
-BuildRequires:	rpmbuild(macros) >= 1.593
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
-BuildRequires:	upower-devel >= 0.99.0
+BuildRequires:	upower-devel >= 0.99.8
 # wayland-client
 BuildRequires:	wayland-devel
 %ifnarch s390 s390x
@@ -53,13 +55,14 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.56
-Requires:	colord >= 1.0.2
+Requires:	colord >= 1.3.5
 Requires:	cups-lib >= 1.4
+Requires:	gcr >= 3.7.5
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	glib2 >= 1:2.56
 Requires:	gnome-desktop >= 3.12.0
-Requires:	gsettings-desktop-schemas >= 3.28
+Requires:	gsettings-desktop-schemas >= 3.33.0
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -72,9 +75,9 @@ Requires:	libwacom >= 0.7
 %endif
 Requires:	nss >= 1:3.11.2
 Requires:	pango >= 1:1.20.0
-Requires:	polkit-libs >= 0.103
+Requires:	polkit-libs >= 0.114
 Requires:	pulseaudio-libs >= 2.0
-Requires:	upower-libs >= 0.99.0
+Requires:	upower-libs >= 0.99.8
 # sr@Latn vs. sr@latin
 Obsoletes:	gnome-settings-daemon-test < 1:3.24.0
 Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
@@ -107,13 +110,13 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %build
 %meson build
 
-%meson_build -C build
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 
-%meson_install -C build
+%ninja_install -C build
 
 %find_lang %{name}
 
@@ -133,15 +136,12 @@ fi
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %attr(755,root,root) %{_libexecdir}/gsd-a11y-settings
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
-%attr(755,root,root) %{_libexecdir}/gsd-clipboard
 %attr(755,root,root) %{_libexecdir}/gsd-color
 %attr(755,root,root) %{_libexecdir}/gsd-datetime
 %attr(755,root,root) %{_libexecdir}/gsd-dummy
 %attr(755,root,root) %{_libexecdir}/gsd-housekeeping
 %attr(755,root,root) %{_libexecdir}/gsd-keyboard
-%attr(755,root,root) %{_libexecdir}/gsd-locate-pointer
 %attr(755,root,root) %{_libexecdir}/gsd-media-keys
-%attr(755,root,root) %{_libexecdir}/gsd-mouse
 %attr(755,root,root) %{_libexecdir}/gsd-power
 %attr(755,root,root) %{_libexecdir}/gsd-print-notifications
 %attr(755,root,root) %{_libexecdir}/gsd-printer
@@ -150,12 +150,13 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-sharing
 %attr(755,root,root) %{_libexecdir}/gsd-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-sound
-%attr(755,root,root) %{_libexecdir}/gsd-wacom
-%attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %ifnarch s390 s390x
+%attr(755,root,root) %{_libexecdir}/gsd-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-oled-helper
 %endif
+%attr(755,root,root) %{_libexecdir}/gsd-wwan
+%attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsd.so
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
@@ -167,14 +168,62 @@ fi
 %ifnarch s390 s390x
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %endif
+%dir %{systemduserunitdir}/gnome-session-initialized.target.wants
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-a11y-settings.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-color.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-datetime.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-housekeeping.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-keyboard.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-media-keys.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-power.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-print-notifications.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-rfkill.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-screensaver-proxy.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-sharing.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-smartcard.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-sound.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-wacom.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-wwan.target
+%dir %{systemduserunitdir}/gnome-session-x11-services.target.wants
+%{systemduserunitdir}/gnome-session-x11-services.target.wants/gsd-xsettings.target
+%{systemduserunitdir}/gsd-a11y-settings.service
+%{systemduserunitdir}/gsd-a11y-settings.target
+%{systemduserunitdir}/gsd-color.service
+%{systemduserunitdir}/gsd-color.target
+%{systemduserunitdir}/gsd-datetime.service
+%{systemduserunitdir}/gsd-datetime.target
+%{systemduserunitdir}/gsd-housekeeping.service
+%{systemduserunitdir}/gsd-housekeeping.target
+%{systemduserunitdir}/gsd-keyboard.service
+%{systemduserunitdir}/gsd-keyboard.target
+%{systemduserunitdir}/gsd-media-keys.service
+%{systemduserunitdir}/gsd-media-keys.target
+%{systemduserunitdir}/gsd-power.service
+%{systemduserunitdir}/gsd-power.target
+%{systemduserunitdir}/gsd-print-notifications.service
+%{systemduserunitdir}/gsd-print-notifications.target
+%{systemduserunitdir}/gsd-rfkill.service
+%{systemduserunitdir}/gsd-rfkill.target
+%{systemduserunitdir}/gsd-screensaver-proxy.service
+%{systemduserunitdir}/gsd-screensaver-proxy.target
+%{systemduserunitdir}/gsd-sharing.service
+%{systemduserunitdir}/gsd-sharing.target
+%{systemduserunitdir}/gsd-smartcard.service
+%{systemduserunitdir}/gsd-smartcard.target
+%{systemduserunitdir}/gsd-sound.service
+%{systemduserunitdir}/gsd-sound.target
+%{systemduserunitdir}/gsd-wacom.service
+%{systemduserunitdir}/gsd-wacom.target
+%{systemduserunitdir}/gsd-wwan.service
+%{systemduserunitdir}/gsd-wwan.target
+%{systemduserunitdir}/gsd-xsettings.service
+%{systemduserunitdir}/gsd-xsettings.target
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11ySettings.desktop
-%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Clipboard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Color.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Datetime.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Housekeeping.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Keyboard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.MediaKeys.desktop
-%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Mouse.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Power.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.PrintNotifications.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Rfkill.desktop
@@ -185,6 +234,7 @@ fi
 %ifnarch s390 s390x
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Wacom.desktop
 %endif
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Wwan.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.XSettings.desktop
 
 %files devel
