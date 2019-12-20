@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.34.1
+Version:	3.34.2
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.34/%{name}-%{version}.tar.xz
-# Source0-md5:	cdd0d0c8664056deb78aa40c88ec24d1
+# Source0-md5:	493332fa0f36645188468fed41c0060b
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -20,7 +20,7 @@ BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.56
-BuildRequires:	gnome-desktop-devel >= 3.12.0
+BuildRequires:	gnome-desktop-devel >= 3.34.2
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.33.0
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
@@ -61,7 +61,7 @@ Requires:	gcr >= 3.7.5
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	glib2 >= 1:2.56
-Requires:	gnome-desktop >= 3.12.0
+Requires:	gnome-desktop >= 3.34.2
 Requires:	gsettings-desktop-schemas >= 3.33.0
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
