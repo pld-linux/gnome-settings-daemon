@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.34.2
-Release:	2
+Version:	3.36.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.34/%{name}-%{version}.tar.xz
-# Source0-md5:	493332fa0f36645188468fed41c0060b
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.36/%{name}-%{version}.tar.xz
+# Source0-md5:	e28f11174ca0bafc56fb7a766591d786
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -21,7 +21,7 @@ BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.56
 BuildRequires:	gnome-desktop-devel >= 3.34.2
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.33.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.36.0
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -62,7 +62,7 @@ Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	glib2 >= 1:2.56
 Requires:	gnome-desktop >= 3.34.2
-Requires:	gsettings-desktop-schemas >= 3.33.0
+Requires:	gsettings-desktop-schemas >= 3.36.0
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -150,6 +150,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-sharing
 %attr(755,root,root) %{_libexecdir}/gsd-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-sound
+%attr(755,root,root) %{_libexecdir}/gsd-usb-protection
 %ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
@@ -182,6 +183,7 @@ fi
 %{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-sharing.target
 %{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-smartcard.target
 %{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-sound.target
+%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-usb-protection.target
 %{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-wacom.target
 %{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-wwan.target
 %dir %{systemduserunitdir}/gnome-session-x11-services.target.wants
@@ -212,12 +214,16 @@ fi
 %{systemduserunitdir}/gsd-smartcard.target
 %{systemduserunitdir}/gsd-sound.service
 %{systemduserunitdir}/gsd-sound.target
+%{systemduserunitdir}/gsd-usb-protection.service
+%{systemduserunitdir}/gsd-usb-protection.target
 %{systemduserunitdir}/gsd-wacom.service
 %{systemduserunitdir}/gsd-wacom.target
 %{systemduserunitdir}/gsd-wwan.service
 %{systemduserunitdir}/gsd-wwan.target
 %{systemduserunitdir}/gsd-xsettings.service
 %{systemduserunitdir}/gsd-xsettings.target
+%dir %{_sysconfdir}/xdg/Xwayland-session.d
+%attr(755,root,root) %{_sysconfdir}/xdg/Xwayland-session.d/00-xrdb
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11ySettings.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Color.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Datetime.desktop
@@ -231,6 +237,7 @@ fi
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sharing.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Smartcard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sound.desktop
+%{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.UsbProtection.desktop
 %ifnarch s390 s390x
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Wacom.desktop
 %endif
