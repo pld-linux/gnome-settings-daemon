@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.36.1
+Version:	3.38.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.36/%{name}-%{version}.tar.xz
-# Source0-md5:	102dc488a6a726e4050cf5ab7e967e8d
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.38/%{name}-%{version}.tar.xz
+# Source0-md5:	69988449f4e1be6b26a0109cc6019d47
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -32,7 +32,7 @@ BuildRequires:	librsvg-devel >= 2.36.2
 BuildRequires:	libwacom-devel >= 0.7
 %endif
 BuildRequires:	libxslt-progs
-BuildRequires:	meson >= 0.44.0
+BuildRequires:	meson >= 0.47.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
@@ -41,6 +41,7 @@ BuildRequires:	polkit-devel >= 0.114
 BuildRequires:	pulseaudio-devel >= 2.0
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
+BuildRequires:	systemd-units >= 1:243
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.99.8
@@ -77,11 +78,10 @@ Requires:	nss >= 1:3.11.2
 Requires:	pango >= 1:1.20.0
 Requires:	polkit-libs >= 0.114
 Requires:	pulseaudio-libs >= 2.0
+Requires:	systemd-units >= 1:243
 Requires:	upower-libs >= 0.99.8
-# sr@Latn vs. sr@latin
 Obsoletes:	gnome-settings-daemon-test < 1:3.24.0
 Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
-Conflicts:	glibc-misc < 6:2.7
 Conflicts:	gnome-color-manager < 3.1.92-1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -138,7 +138,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-backlight-helper
 %attr(755,root,root) %{_libexecdir}/gsd-color
 %attr(755,root,root) %{_libexecdir}/gsd-datetime
-%attr(755,root,root) %{_libexecdir}/gsd-dummy
 %attr(755,root,root) %{_libexecdir}/gsd-housekeeping
 %attr(755,root,root) %{_libexecdir}/gsd-keyboard
 %attr(755,root,root) %{_libexecdir}/gsd-media-keys
@@ -153,7 +152,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-usb-protection
 %ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-wacom
-%attr(755,root,root) %{_libexecdir}/gsd-wacom-led-helper
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-oled-helper
 %endif
 %attr(755,root,root) %{_libexecdir}/gsd-wwan
@@ -169,59 +167,44 @@ fi
 %ifnarch s390 s390x
 %{_datadir}/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %endif
-%dir %{systemduserunitdir}/gnome-session-initialized.target.wants
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-a11y-settings.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-color.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-datetime.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-housekeeping.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-keyboard.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-media-keys.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-power.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-print-notifications.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-rfkill.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-screensaver-proxy.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-sharing.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-smartcard.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-sound.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-usb-protection.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-wacom.target
-%{systemduserunitdir}/gnome-session-initialized.target.wants/gsd-wwan.target
 %dir %{systemduserunitdir}/gnome-session-x11-services.target.wants
-%{systemduserunitdir}/gnome-session-x11-services.target.wants/gsd-xsettings.target
-%{systemduserunitdir}/gsd-a11y-settings.service
-%{systemduserunitdir}/gsd-a11y-settings.target
-%{systemduserunitdir}/gsd-color.service
-%{systemduserunitdir}/gsd-color.target
-%{systemduserunitdir}/gsd-datetime.service
-%{systemduserunitdir}/gsd-datetime.target
-%{systemduserunitdir}/gsd-housekeeping.service
-%{systemduserunitdir}/gsd-housekeeping.target
-%{systemduserunitdir}/gsd-keyboard.service
-%{systemduserunitdir}/gsd-keyboard.target
-%{systemduserunitdir}/gsd-media-keys.service
-%{systemduserunitdir}/gsd-media-keys.target
-%{systemduserunitdir}/gsd-power.service
-%{systemduserunitdir}/gsd-power.target
-%{systemduserunitdir}/gsd-print-notifications.service
-%{systemduserunitdir}/gsd-print-notifications.target
-%{systemduserunitdir}/gsd-rfkill.service
-%{systemduserunitdir}/gsd-rfkill.target
-%{systemduserunitdir}/gsd-screensaver-proxy.service
-%{systemduserunitdir}/gsd-screensaver-proxy.target
-%{systemduserunitdir}/gsd-sharing.service
-%{systemduserunitdir}/gsd-sharing.target
-%{systemduserunitdir}/gsd-smartcard.service
-%{systemduserunitdir}/gsd-smartcard.target
-%{systemduserunitdir}/gsd-sound.service
-%{systemduserunitdir}/gsd-sound.target
-%{systemduserunitdir}/gsd-usb-protection.service
-%{systemduserunitdir}/gsd-usb-protection.target
-%{systemduserunitdir}/gsd-wacom.service
-%{systemduserunitdir}/gsd-wacom.target
-%{systemduserunitdir}/gsd-wwan.service
-%{systemduserunitdir}/gsd-wwan.target
-%{systemduserunitdir}/gsd-xsettings.service
-%{systemduserunitdir}/gsd-xsettings.target
+%{systemduserunitdir}/gnome-session-x11-services.target.wants/org.gnome.SettingsDaemon.XSettings.service
+%dir %{systemduserunitdir}/gnome-session-x11-services-ready.target.wants
+%{systemduserunitdir}/gnome-session-x11-services-ready.target.wants/org.gnome.SettingsDaemon.XSettings.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.A11ySettings.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.A11ySettings.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Color.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Color.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Datetime.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Datetime.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Housekeeping.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Housekeeping.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Keyboard.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Keyboard.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.MediaKeys.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.MediaKeys.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Power.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Power.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.PrintNotifications.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.PrintNotifications.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Rfkill.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Rfkill.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.ScreensaverProxy.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.ScreensaverProxy.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Sharing.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Sharing.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Smartcard.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Smartcard.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Sound.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Sound.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.UsbProtection.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.UsbProtection.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Wacom.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Wacom.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Wwan.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.Wwan.target
+%{systemduserunitdir}/org.gnome.SettingsDaemon.XSettings.service
+%{systemduserunitdir}/org.gnome.SettingsDaemon.XSettings.target
 %dir %{_sysconfdir}/xdg/Xwayland-session.d
 %attr(755,root,root) %{_sysconfdir}/xdg/Xwayland-session.d/00-xrdb
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.A11ySettings.desktop
