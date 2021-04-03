@@ -1,18 +1,18 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	3.38.1
+Version:	40.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-settings-daemon/3.38/%{name}-%{version}.tar.xz
-# Source0-md5:	ac40a03be99379de432b822c0001904e
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/40/%{name}-%{version}.tar.xz
+# Source0-md5:	9866c0995b0d74ed168198e5af421e7b
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
-BuildRequires:	colord-devel >= 1.3.5
+BuildRequires:	colord-devel >= 1.4.5
 BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
 BuildRequires:	gcr-devel >= 3.7.5
@@ -20,12 +20,12 @@ BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.56
-BuildRequires:	gnome-desktop-devel >= 3.34.2
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.36.0
+BuildRequires:	gnome-desktop-devel >= 3.37.1
+BuildRequires:	gsettings-desktop-schemas-devel >= 40
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
-BuildRequires:	libgweather-devel >= 3.10.0
+BuildRequires:	libgweather-devel >= 40
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	librsvg-devel >= 2.36.2
 %ifnarch s390 s390x
@@ -56,19 +56,19 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.56
-Requires:	colord >= 1.3.5
+Requires:	colord >= 1.4.5
 Requires:	cups-lib >= 1.4
 Requires:	gcr >= 3.7.5
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	glib2 >= 1:2.56
-Requires:	gnome-desktop >= 3.34.2
-Requires:	gsettings-desktop-schemas >= 3.36.0
+Requires:	gnome-desktop >= 3.37.1
+Requires:	gsettings-desktop-schemas >= 40
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Requires:	lcms2 >= 2.2
-Requires:	libgweather >= 3.10.0
+Requires:	libgweather >= 40
 Requires:	libnotify >= 0.7.3
 Requires:	librsvg >= 2.36.2
 %ifnarch s390 s390x
@@ -114,6 +114,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+# differs from libgsd.so path, see meson.build /gsd_gtk_modules_directory
 install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 
 %ninja_install -C build
@@ -157,8 +158,9 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-wwan
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-3.0/libgsd.so
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
+%dir %{_libdir}/gnome-settings-daemon-40
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-40/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -229,5 +231,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-3.0
+%{_includedir}/gnome-settings-daemon-40
 %{_pkgconfigdir}/gnome-settings-daemon.pc
