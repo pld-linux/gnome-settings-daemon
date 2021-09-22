@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	40.0.1
+Version:	41.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-settings-daemon/40/%{name}-%{version}.tar.xz
-# Source0-md5:	b5cbe98f5d5fe430e402048d5817f875
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/41/%{name}-%{version}.tar.xz
+# Source0-md5:	8ded0ca755208520e4045a17c0722d8b
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -19,9 +19,9 @@ BuildRequires:	gcr-devel >= 3.7.5
 BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.56
+BuildRequires:	glib2-devel >= 1:2.58
 BuildRequires:	gnome-desktop-devel >= 3.37.1
-BuildRequires:	gsettings-desktop-schemas-devel >= 40
+BuildRequires:	gsettings-desktop-schemas-devel >= 41
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -32,7 +32,7 @@ BuildRequires:	librsvg-devel >= 2.36.2
 BuildRequires:	libwacom-devel >= 0.7
 %endif
 BuildRequires:	libxslt-progs
-BuildRequires:	meson >= 0.47.0
+BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
@@ -44,7 +44,7 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	systemd-units >= 1:243
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
-BuildRequires:	upower-devel >= 0.99.8
+BuildRequires:	upower-devel >= 0.99.12
 # wayland-client
 BuildRequires:	wayland-devel
 %ifnarch s390 s390x
@@ -52,18 +52,19 @@ BuildRequires:	xorg-driver-input-wacom-devel
 %endif
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXfixes-devel >= 6.0
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.56
+Requires(post,postun):	glib2 >= 1:2.58
 Requires:	colord >= 1.4.5
 Requires:	cups-lib >= 1.4
 Requires:	gcr >= 3.7.5
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
-Requires:	glib2 >= 1:2.56
+Requires:	glib2 >= 1:2.58
 Requires:	gnome-desktop >= 3.37.1
-Requires:	gsettings-desktop-schemas >= 40
+Requires:	gsettings-desktop-schemas >= 41
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -79,7 +80,8 @@ Requires:	pango >= 1:1.20.0
 Requires:	polkit-libs >= 0.114
 Requires:	pulseaudio-libs >= 2.0
 Requires:	systemd-units >= 1:243
-Requires:	upower-libs >= 0.99.8
+Requires:	upower-libs >= 0.99.12
+Requires:	xorg-lib-libXfixes >= 6.0
 Obsoletes:	gnome-settings-daemon-test < 1:3.24.0
 Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
 Conflicts:	gnome-color-manager < 3.1.92-1
@@ -95,7 +97,7 @@ Demon ustawień GNOME.
 Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
-Requires:	glib2-devel >= 1:2.56
+Requires:	glib2-devel >= 1:2.58
 # doesn't require base currently
 
 %description devel
@@ -159,8 +161,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
-%dir %{_libdir}/gnome-settings-daemon-40
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-40/libgsd.so
+%dir %{_libdir}/gnome-settings-daemon-41
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-41/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -231,5 +233,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-40
+%{_includedir}/gnome-settings-daemon-41
 %{_pkgconfigdir}/gnome-settings-daemon.pc
