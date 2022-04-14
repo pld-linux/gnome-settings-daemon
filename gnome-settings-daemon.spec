@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	41.0
+Version:	42.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-settings-daemon/41/%{name}-%{version}.tar.xz
-# Source0-md5:	8ded0ca755208520e4045a17c0722d8b
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/42/%{name}-%{version}.tar.xz
+# Source0-md5:	3c740049149d18691b9791141bec1d6e
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -21,13 +21,12 @@ BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.58
 BuildRequires:	gnome-desktop-devel >= 3.37.1
-BuildRequires:	gsettings-desktop-schemas-devel >= 41
+BuildRequires:	gsettings-desktop-schemas-devel >= 42
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
-BuildRequires:	libgweather-devel >= 40
+BuildRequires:	libgweather4-devel >= 4.0
 BuildRequires:	libnotify-devel >= 0.7.3
-BuildRequires:	librsvg-devel >= 2.36.2
 %ifnarch s390 s390x
 BuildRequires:	libwacom-devel >= 0.7
 %endif
@@ -64,14 +63,13 @@ Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	glib2 >= 1:2.58
 Requires:	gnome-desktop >= 3.37.1
-Requires:	gsettings-desktop-schemas >= 41
+Requires:	gsettings-desktop-schemas >= 42
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Requires:	lcms2 >= 2.2
-Requires:	libgweather >= 40
+Requires:	libgweather4 >= 4.0
 Requires:	libnotify >= 0.7.3
-Requires:	librsvg >= 2.36.2
 %ifnarch s390 s390x
 Requires:	libwacom >= 0.7
 %endif
@@ -161,8 +159,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
-%dir %{_libdir}/gnome-settings-daemon-41
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-41/libgsd.so
+%dir %{_libdir}/gnome-settings-daemon-42
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-42/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -233,5 +231,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-41
+%{_includedir}/gnome-settings-daemon-42
 %{_pkgconfigdir}/gnome-settings-daemon.pc
