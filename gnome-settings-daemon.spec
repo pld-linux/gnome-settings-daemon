@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	42.2
-Release:	2
+Version:	43.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-settings-daemon/42/%{name}-%{version}.tar.xz
-# Source0-md5:	f70b13b8225a4e93e2c6c615380c82e8
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/43/%{name}-%{version}.tar.xz
+# Source0-md5:	eea402f0a87aea7f4d8428af3917fb0c
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -15,7 +15,7 @@ BuildRequires:	alsa-lib-devel
 BuildRequires:	colord-devel >= 1.4.5
 BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
-BuildRequires:	gcr-devel >= 3.7.5
+BuildRequires:	gcr4-devel >= 4
 BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib-devel >= 3.10.0
 BuildRequires:	gettext-tools
@@ -31,7 +31,7 @@ BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	libwacom-devel >= 0.7
 %endif
 BuildRequires:	libxslt-progs
-BuildRequires:	meson >= 0.49.0
+BuildRequires:	meson >= 0.57.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
@@ -58,7 +58,7 @@ BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.58
 Requires:	colord >= 1.4.5
 Requires:	cups-lib >= 1.4
-Requires:	gcr >= 3.7.5
+Requires:	gcr4-libs >= 4
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib >= 3.10.0
 Requires:	glib2 >= 1:2.58
@@ -159,8 +159,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
-%dir %{_libdir}/gnome-settings-daemon-42
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-42/libgsd.so
+%dir %{_libdir}/gnome-settings-daemon-43
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-43/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -231,5 +231,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-42
+%{_includedir}/gnome-settings-daemon-43
 %{_pkgconfigdir}/gnome-settings-daemon.pc
