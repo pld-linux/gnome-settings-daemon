@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	43.0
+Version:	44.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-settings-daemon/43/%{name}-%{version}.tar.xz
-# Source0-md5:	eea402f0a87aea7f4d8428af3917fb0c
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/44/%{name}-%{version}.tar.xz
+# Source0-md5:	5539036fdc10b9f250890b725fdbfb05
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -17,7 +17,7 @@ BuildRequires:	cups-devel >= 1.4
 BuildRequires:	fontconfig-devel
 BuildRequires:	gcr4-devel >= 4
 BuildRequires:	geoclue2-devel >= 2.3.1
-BuildRequires:	geocode-glib-devel >= 3.10.0
+BuildRequires:	geocode-glib2-devel >= 3.26.3
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.58
 BuildRequires:	gnome-desktop-devel >= 3.37.1
@@ -60,7 +60,7 @@ Requires:	colord >= 1.4.5
 Requires:	cups-lib >= 1.4
 Requires:	gcr4-libs >= 4
 Requires:	geoclue2 >= 2.3.1
-Requires:	geocode-glib >= 3.10.0
+Requires:	geocode-glib2 >= 3.26.3
 Requires:	glib2 >= 1:2.58
 Requires:	gnome-desktop >= 3.37.1
 Requires:	gsettings-desktop-schemas >= 42
@@ -159,8 +159,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
-%dir %{_libdir}/gnome-settings-daemon-43
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-43/libgsd.so
+%dir %{_libdir}/gnome-settings-daemon-44
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-44/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -231,5 +231,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-43
+%{_includedir}/gnome-settings-daemon-44
 %{_pkgconfigdir}/gnome-settings-daemon.pc
