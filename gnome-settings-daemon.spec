@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	45.1
+Version:	46.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-settings-daemon/45/%{name}-%{version}.tar.xz
-# Source0-md5:	61c2d2eb639e6eae775e4330c0dc47fe
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/46/%{name}-%{version}.tar.xz
+# Source0-md5:	408d4fc18cf6971828ff957e052ce4dd
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -19,9 +19,9 @@ BuildRequires:	gcr4-devel >= 4
 BuildRequires:	geoclue2-devel >= 2.3.1
 BuildRequires:	geocode-glib2-devel >= 3.26.3
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.58
+BuildRequires:	glib2-devel >= 1:2.70
 BuildRequires:	gnome-desktop-devel >= 3.37.1
-BuildRequires:	gsettings-desktop-schemas-devel >= 42
+BuildRequires:	gsettings-desktop-schemas-devel >= 46
 BuildRequires:	gtk+3-devel >= 3.15.3
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libcanberra-gtk3-devel
@@ -55,15 +55,15 @@ BuildRequires:	xorg-lib-libXfixes-devel >= 6.0
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.58
+Requires(post,postun):	glib2 >= 1:2.70
 Requires:	colord >= 1.4.5
 Requires:	cups-lib >= 1.4
 Requires:	gcr4-libs >= 4
 Requires:	geoclue2 >= 2.3.1
 Requires:	geocode-glib2 >= 3.26.3
-Requires:	glib2 >= 1:2.58
+Requires:	glib2 >= 1:2.70
 Requires:	gnome-desktop >= 3.37.1
-Requires:	gsettings-desktop-schemas >= 42
+Requires:	gsettings-desktop-schemas >= 46
 Requires:	gtk+3 >= 3.15.3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -95,7 +95,7 @@ Demon ustawień GNOME.
 Summary:	Header file for developing GNOME Settings Daemon clients
 Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia klientów demona ustawień GNOME
 Group:		Development/Libraries
-Requires:	glib2-devel >= 1:2.58
+Requires:	glib2-devel >= 1:2.70
 # doesn't require base currently
 
 %description devel
@@ -159,8 +159,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
-%dir %{_libdir}/gnome-settings-daemon-45
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-45/libgsd.so
+%dir %{_libdir}/gnome-settings-daemon-46
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-46/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -231,5 +231,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-45
+%{_includedir}/gnome-settings-daemon-46
 %{_pkgconfigdir}/gnome-settings-daemon.pc
