@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	46.0
+Version:	47.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-settings-daemon/46/%{name}-%{version}.tar.xz
-# Source0-md5:	408d4fc18cf6971828ff957e052ce4dd
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/47/%{name}-%{version}.tar.xz
+# Source0-md5:	39121de0ab17b3052ed6aebe6fa6ce8b
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
@@ -37,10 +37,11 @@ BuildRequires:	nss-devel >= 1:3.11.2
 BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.114
-BuildRequires:	pulseaudio-devel >= 2.0
+BuildRequires:	pulseaudio-devel >= 13.0
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
-BuildRequires:	systemd-units >= 1:243
+# or libelogind >= 209 (with -Denable_systemd=false)
+BuildRequires:	systemd-devel >= 1:243
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.99.12
@@ -76,7 +77,7 @@ Requires:	libwacom >= 0.7
 Requires:	nss >= 1:3.11.2
 Requires:	pango >= 1:1.20.0
 Requires:	polkit-libs >= 0.114
-Requires:	pulseaudio-libs >= 2.0
+Requires:	pulseaudio-libs >= 13.0
 Requires:	systemd-units >= 1:243
 Requires:	upower-libs >= 0.99.12
 Requires:	xorg-lib-libXfixes >= 6.0
@@ -159,8 +160,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
-%dir %{_libdir}/gnome-settings-daemon-46
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-46/libgsd.so
+%dir %{_libdir}/gnome-settings-daemon-47
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-47/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -231,5 +232,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-46
+%{_includedir}/gnome-settings-daemon-47
 %{_pkgconfigdir}/gnome-settings-daemon.pc
