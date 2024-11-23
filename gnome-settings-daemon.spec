@@ -1,13 +1,13 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	47.1
+Version:	47.2
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/gnome-settings-daemon/47/%{name}-%{version}.tar.xz
-# Source0-md5:	39121de0ab17b3052ed6aebe6fa6ce8b
+# Source0-md5:	39babcea9c9eb5fd7809cbc685cd282c
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
 BuildRequires:	ModemManager-devel >= 1.0
 BuildRequires:	NetworkManager-devel >= 1.0
