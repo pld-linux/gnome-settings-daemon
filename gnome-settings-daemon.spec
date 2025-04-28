@@ -1,15 +1,15 @@
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
-Version:	47.2
+Version:	48.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-settings-daemon/47/%{name}-%{version}.tar.xz
-# Source0-md5:	39babcea9c9eb5fd7809cbc685cd282c
+Source0:	https://download.gnome.org/sources/gnome-settings-daemon/48/%{name}-%{version}.tar.xz
+# Source0-md5:	0ec5ed77aa85685cdf3d44f3d8dce0b5
 URL:		https://gitlab.gnome.org/GNOME/gnome-settings-daemon
-BuildRequires:	ModemManager-devel >= 1.0
+BuildRequires:	ModemManager-devel >= 1.18
 BuildRequires:	NetworkManager-devel >= 1.0
 BuildRequires:	alsa-lib-devel
 BuildRequires:	colord-devel >= 1.4.5
@@ -38,9 +38,9 @@ BuildRequires:	pango-devel >= 1:1.20.0
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.114
 BuildRequires:	pulseaudio-devel >= 13.0
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
-# or libelogind >= 209 (with -Denable_systemd=false)
+# or libelogind >= 209 (with -Denable_systemd=false -Denable_elogind=true)
 BuildRequires:	systemd-devel >= 1:243
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
@@ -57,6 +57,7 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-proto-kbproto-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.70
+Requires:	ModemManager-libs >= 1.18
 Requires:	colord >= 1.4.5
 Requires:	cups-lib >= 1.4
 Requires:	gcr4-libs >= 4
@@ -109,16 +110,16 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %setup -q
 
 %build
-%meson build
+%meson
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 # differs from libgsd.so path, see meson.build /gsd_gtk_modules_directory
 install -d $RPM_BUILD_ROOT%{_libdir}/gnome-settings-daemon-3.0/gtk-modules
 
-%ninja_install -C build
+%meson_install
 
 %find_lang %{name}
 
@@ -160,8 +161,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-xsettings
 %dir %{_libdir}/gnome-settings-daemon-3.0
 %dir %{_libdir}/gnome-settings-daemon-3.0/gtk-modules
-%dir %{_libdir}/gnome-settings-daemon-47
-%attr(755,root,root) %{_libdir}/gnome-settings-daemon-47/libgsd.so
+%dir %{_libdir}/gnome-settings-daemon-48
+%attr(755,root,root) %{_libdir}/gnome-settings-daemon-48/libgsd.so
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 %{_datadir}/GConf/gsettings/gnome-settings-daemon.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.settings-daemon.*.xml
@@ -232,5 +233,5 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gnome-settings-daemon-47
+%{_includedir}/gnome-settings-daemon-48
 %{_pkgconfigdir}/gnome-settings-daemon.pc
