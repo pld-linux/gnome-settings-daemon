@@ -2,7 +2,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	48.1
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -229,9 +229,7 @@ fi
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sharing.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Smartcard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sound.desktop
-%if 0
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.UsbProtection.desktop
-%endif
 %ifnarch s390 s390x
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Wacom.desktop
 %endif
