@@ -2,7 +2,7 @@ Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
 Version:	48.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -110,7 +110,8 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 %setup -q
 
 %build
-%meson
+%meson \
+	-Dusb-protection=false
 
 %meson_build
 
@@ -152,7 +153,9 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-sharing
 %attr(755,root,root) %{_libexecdir}/gsd-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-sound
+%if 0
 %attr(755,root,root) %{_libexecdir}/gsd-usb-protection
+%endif
 %ifnarch s390 s390x
 %attr(755,root,root) %{_libexecdir}/gsd-wacom
 %attr(755,root,root) %{_libexecdir}/gsd-wacom-oled-helper
@@ -201,8 +204,10 @@ fi
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Smartcard.target
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Sound.service
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Sound.target
+%if 0
 %{systemduserunitdir}/org.gnome.SettingsDaemon.UsbProtection.service
 %{systemduserunitdir}/org.gnome.SettingsDaemon.UsbProtection.target
+%endif
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Wacom.service
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Wacom.target
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Wwan.service
@@ -224,7 +229,9 @@ fi
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sharing.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Smartcard.desktop
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Sound.desktop
+%if 0
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.UsbProtection.desktop
+%endif
 %ifnarch s390 s390x
 %{_sysconfdir}/xdg/autostart/org.gnome.SettingsDaemon.Wacom.desktop
 %endif
