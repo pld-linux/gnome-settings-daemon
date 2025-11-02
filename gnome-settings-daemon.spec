@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_with	usb_protection		# build with usbguard support
+#
 Summary:	GNOME Settings Daemon
 Summary(pl.UTF-8):	Demon ustawień GNOME
 Name:		gnome-settings-daemon
@@ -81,6 +85,9 @@ Requires:	polkit-libs >= 0.114
 Requires:	pulseaudio-libs >= 13.0
 Requires:	systemd-units >= 1:243
 Requires:	upower-libs >= 0.99.12
+%if %{with usb_protection}
+Requires:	usbguard
+%endif
 Requires:	xorg-lib-libXfixes >= 6.0
 Obsoletes:	gnome-settings-daemon-test < 1:3.24.0
 Obsoletes:	gnome-settings-daemon-updates < 1:3.14.0
@@ -111,7 +118,7 @@ Plik nagłówkowy do tworzenia klientów demona ustawień GNOME.
 
 %build
 %meson \
-	-Dusb-protection=false
+	-Dusb-protection=%{__true_false usb_protection}
 
 %meson_build
 
@@ -153,7 +160,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/gsd-sharing
 %attr(755,root,root) %{_libexecdir}/gsd-smartcard
 %attr(755,root,root) %{_libexecdir}/gsd-sound
-%if 0
+%if %{with usb_protection}
 %attr(755,root,root) %{_libexecdir}/gsd-usb-protection
 %endif
 %ifnarch s390 s390x
@@ -204,7 +211,7 @@ fi
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Smartcard.target
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Sound.service
 %{systemduserunitdir}/org.gnome.SettingsDaemon.Sound.target
-%if 0
+%if %{with usb_protection}
 %{systemduserunitdir}/org.gnome.SettingsDaemon.UsbProtection.service
 %{systemduserunitdir}/org.gnome.SettingsDaemon.UsbProtection.target
 %endif
